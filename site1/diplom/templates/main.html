@@ -1,0 +1,46 @@
+<!doctype html>
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diplom</title>
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Inter:wght@400;700&family=Montserrat:wght@700&family=Noto+Sans:wght@700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>
+</head>
+<body style='overflow-x:hidden; margin:0%'>
+    <div class="main">
+        <div class="menu">
+            <div class="menu_button" onclick="gotoConstructor()">
+                <div class="button_ico"><img src="{% static "images/construct_button.png"%}"></div>
+                <div class="button_text">Конструктор</div>
+            </div>
+            <div class="menu_button" onclick="gotoOrders()">
+                <div class="button_ico"><img src="{% static "images/order_button.png"%}"></div>
+                <div class="button_text">Заказы</div>
+            </div>
+            <div class="menu_button" onclick="gotoCakes()">
+                <div class="button_ico"><img src="{% static "images/cake_button.png"%}"></div>
+                <div class="button_text">Список тортов</div>
+            </div>
+            <div class="menu_button" onclick="gotoIngredients()">
+                <div class="button_ico"><img src="{% static "images/ing_button.png"%}"></div>
+                <div class="button_text">Ингредиенты</div>
+            </div>
+            <div class="menu_button" onclick="gotoConcIngredients()">
+                <div class="button_ico"><img src="{% static "images/conc_ing_button.png"%}"></div>
+                <div class="button_text">Конкретные ингредиенты</div>
+            </div>
+            <div class="menu_button" onclick="gotoParameteres()">
+                <div class="button_ico"><img src="{% static "images/parameter_button.png"%}"></div>
+                <div class="button_text">Параметры</div>
+            </div>
+        </div>
+    </div>
+    <script src="{% static "js/main.js"%}"></script>
+</body>
+</html>

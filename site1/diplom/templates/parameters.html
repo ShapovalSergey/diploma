@@ -1,0 +1,38 @@
+<!doctype html>
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diplom</title>
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Inter:wght@400;700&family=Montserrat:wght@700&family=Noto+Sans:wght@700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>
+</head>
+<body style='overflow-x:hidden; margin:0%'>
+    <input type="hidden" class="saved" value="{{saved}}" id="saved">
+    <input type="hidden" class="new" value=0 id="new">
+    <div class="main">
+        <div class="main_button" onclick="gotomaincheck()">
+            <div class="main_button_text">На главную</div>
+        </div>
+        <div class="save_button" onclick="saveChars()">
+            <div class="save_button_text">Сохранить</div>
+        </div>
+        <div class="add_button" onclick="addChar()">
+            <div class="save_button_text" style="width: 400px;height: 40px;">Добавить</div>
+        </div>
+        <div class="chars_field">
+            {% for p in param_info %}
+            <div class="chars_param" id="param_{{p.id}}"><input class="inp" type="text" id="input_{{p.id}}" plain_id="{{p.id}}" value="{{p.name}}"><div class="closebtn" onclick="deleteParameter({{p.id}})"><img src="{% static "images/close-button.png"%}"></div></div>
+            {% endfor %}
+
+        </div>
+    </div>
+    <script src="{% static "js/main.js"%}"></script>
+    <script src="{% static "js/parameter.js"%}"></script>
+</body>
+</html>

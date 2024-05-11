@@ -1,0 +1,43 @@
+<!doctype html>
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diplom</title>
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Inter:wght@400;700&family=Montserrat:wght@700&family=Noto+Sans:wght@700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>
+</head>
+<body style='overflow-x:hidden; margin:0%'>
+    <div class="main">
+        <div class="main_button" onclick="gotomain()">
+            <div class="main_button_text">На главную</div>
+        </div>
+        <div class="add_button" onclick="gotoIngredientInfo('new')">
+            <div class="save_button_text" style="width: 400px;height: 40px;">Добавить</div>
+        </div>
+
+
+
+        <div class="ing_field">
+            {% for i in ing_info %}
+            <div class="ing_card" onclick="gotoIngredientInfo({{i.id}})" id="ing_{{i.id}}" plain_id="{{i.id}}">
+                <div class="ing_card_image"><img class="image" src="{% static ""%}images/ingridients/{{i.image}}" id="card_image_{{i.id}}"></div>
+                <div class="ing_card_text" id="card_text_{{i.id}}">{{i.name}}</div>
+                {% if i.IsEssential == True %}
+                <div class="ing_card_image_base" id="hover_{{i.id}}"><img class="image" src="{% static ""%}images/essential_ingredient.png" id="card_image_{{i.id}}">
+                    <span class="essential_info" id="info_{{i.id}}">Основной ингредиент</span>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script src="{% static "js/main.js"%}"></script>
+    <script src="{% static "js/ingredient.js"%}"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!doctype html>
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, max-age=0, must-revalidate, proxy-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+<title>Diplom</title>
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Inter:wght@400;700&family=Montserrat:wght@700&family=Noto+Sans:wght@700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>
+</head>
+<body style='overflow-x:hidden; margin:0%'>
+    <img src="{% static "images/cakes/test_cake.jpg"%}" style="display: none;">
+    <div class="main">
+        <div class="main_button" onclick="gotomain()">
+            <div class="main_button_text">На главную</div>
+        </div>
+        <div class="add_button" onclick="showPopup()">
+            <div class="save_button_text" style="width: 400px;height: 40px;">Добавить</div>
+        </div>
+
+        <div class="add_cake_back">
+        <div class="add_cake_window" id="popup">
+            <div class="close_popup_button" onclick="closePopup()"><img src="{% static "images/close-button.png"%}"></div>
+            <div class="popup_row" style="top:40%;"><input class="inp1" placeholder="Название" type="text" id="cake_name" style="min-width: 20vw; text-align: center;"></input></div>
+            <div class="popup_row" style="top:60%;"><div class="checkbox_text" style="font-size: 20px; width: 200px;">Изображение:</div><input type='file' id='userFile' style="cursor: pointer;"></div>
+            <div class="popup_row" style="top:15%;"><div class="popup_text">Введите информацию для добавления нового типажа торта</div></div>
+            <div class="popup_row" style="top:85%;">
+            <div class="save_cake_button" onclick="savenewCake()" style="width: 200px;height: 40px; left:35%; top:85%; background:#be1414;">
+                <div class="save_button_text" style="width: 200px;height: 40px;">Сохранить</div>
+            </div>
+            </div>
+        </div>
+        </div>
+        <div class="cake_type_field">
+            {% for ct in ct_info %}
+            <div class="cake_type_card" onclick="gotoCake({{ct.id}})" id="cake_{{ct.id}}" plain_id="{{ct.id}}">
+                <div class="cake_type_card_image"><img class="image" src="{% static ""%}images/cakes/{{ct.image}}" id="card_image_{{ct.id}}"></div>
+                <div class="button_text" id="card_text_{{ct.id}}">{{ct.name}}</div>
+            </div>
+            {% endfor %}
+        </div>
+
+
+
+    </div>
+    <script src="{% static "js/main.js"%}"></script>
+    <script src="{% static "js/cake.js"%}"></script>
+</body>
+</html>
