@@ -254,6 +254,7 @@ def saveingfile(request):
                 ing=Ingredients(name=name,IsEssential=isEssential,IsVisible=isVisible)
                 ing.save()
                 ing.image='ing_'+str(ing.id)+".png"
+                path = default_storage.save('D:\games\diploma\site1\diplom\static\images\ingridients\ing_'+str(ing.id)+".png", file)
             else:
                 ing=Ingredients.objects.get(id=id)
                 ing.name=name
@@ -271,7 +272,7 @@ def saveingfile(request):
                     newingcake=IngCT(Id_ing=Ingredients.objects.get(id=ing.id),Id_cake_type=CakeType.objects.get(id=c))
                     newingcake.save()
             ing.save()
-            if isFileChanged:
+            if isFileChanged=='true':
                 if str(uploaded_file)!="None":
                     path = default_storage.save('D:\games\diploma\site1\diplom\static\images\ingridients\ing_'+str(ing.id)+"."+ing.image.split(".")[1], ContentFile(uploaded_file.read()))
                     uploaded_file.close()                

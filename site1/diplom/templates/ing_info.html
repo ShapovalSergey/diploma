@@ -17,12 +17,12 @@
         <div class="main_button" onclick="gotoIngredients()">
             <div class="main_button_text">Назад</div>
         </div>
-        <div class="add_button" onclick="SaveIngredient('{{id}}')">
-            <div class="save_button_text" style="width: 400px;height: 40px;">Сохранить</div>
+        <div class="save_button" onclick="SaveIngredient('{{id}}')">
+            <div class="save_button_text" >Сохранить</div>
         </div>
-        {% if id != new %}
+        {% if id != 'new' %}
         <div class="delete_button" onclick="DeleteIngredient('{{id}}')">
-            <div class="save_button_text" style="width: 165px;height: 35px; color:#be1414">Удалить</div>
+            <div class="save_button_text" style="width: 165px;height: 35px;">Удалить</div>
             <div class="image_bin"><img src="{% static ""%}images/recycle_bin.png" class="image"></div>
         </div>
         {% endif %}
