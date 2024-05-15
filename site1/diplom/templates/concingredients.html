@@ -17,46 +17,22 @@
         <div class="main_button" onclick="gotomain()">
             <div class="main_button_text">На главную</div>
         </div>
-        <div class="add_button" onclick="gotoConcIngredientInfo('new')">
+        <div class="add_button" id="add_ci" style="visibility: hidden;">
             <div class="save_button_text" style="width: 400px;height: 40px;">Добавить</div>
         </div>
         <div class="conc_ing_row">
-  <select name="potencial" id="potencial" class="custom-select sources" placeholder="Выберите название ингредиента">
-    <option value="DH" selected>P</option>
-    <option value="A">A</option>
-    <option value="B">B</option>
-    <option value="C">C</option>
-    <option value="D">D</option>
+  <select name="potencial" id="ing_type" class="custom-select sources" placeholder="Выберите название ингредиента">
+    {% for i in ing_info %}
+    <option value="{{i.id}}">{{i.name}}</option>
+    {% endfor %}
   </select>
         </div>
         
-        <div class="conc_ing_field">
-            <div class="conc_ing_row_field">asdasdasd</div>
-            <div class="conc_ing_row_field"> asdas</div>
-            <div class="conc_ing_row_field"> dasd</div>
-            <div class="conc_ing_row_field"> asdasd</div>
-            <div class="conc_ing_row_field">dsadsa </div>
-            <div class="conc_ing_row_field">asd </div>
-            <div class="conc_ing_row_field">asdasda </div>
-            <div class="conc_ing_row_field">sdasd </div>
-            <div class="conc_ing_row_field"> asdasd</div>
-            <div class="conc_ing_row_field"> asdasd</div>
-            <div class="conc_ing_row_field"> asdasd</div>
-            <div class="conc_ing_row_field"> asdasd</div>
-            <div class="conc_ing_row_field"> </div>
-            <div class="conc_ing_row_field"> </div>
-            <div class="conc_ing_row_field"> </div>
-            <div class="conc_ing_row_field"> </div>
-            <div class="conc_ing_row_field"> </div>
-            <div class="conc_ing_row_field"> </div>
-            <div class="conc_ing_row_field"> </div>
-            <div class="conc_ing_row_field"> </div>
-            <div class="conc_ing_row_field"> </div>
-            <div class="conc_ing_row_field"> </div>
-            <div class="conc_ing_row_field"> </div>
-            <div class="conc_ing_row_field"> </div>
-            <div class="conc_ing_row_field"> </div>
-            <div class="conc_ing_row_field"> </div>
+        <div class="conc_ing_field" id="ci_field" style="visibility: hidden;">
+            <div class="conc_ing_row_field">                
+                <div class="ing_card_image"><img class="image" src="{% static ""%}images/concingridients/test_ing.png"></div>
+                <div class="ing_card_text">нафыафывфыв fssssssssssssssssssssssssssssssssssssssssфывфывфывфыв</div>
+            </div>
         </div>
 
 

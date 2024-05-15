@@ -30,6 +30,7 @@ urlpatterns = [
     path('check-ing-name/', views.check_ing_name, name="check_ing_name"),
     path('get-cake-id/', views.get_cake_id, name="get_cake_id"),
     path('get-cake-info/', views.get_cake_info, name="get_cake_info"),
+    path('get-ingridients/', views.get_ingridients, name="get_ingridients"),
     path('delete-ing/', views.delete_ing, name="delete_ing"),
     path('save-param-changes/', views.save_param, name="save_param"),
     path('delete-params/', views.delete_param, name="delete_param"),

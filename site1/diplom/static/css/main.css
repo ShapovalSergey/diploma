@@ -120,15 +120,16 @@ body {
 {   
     position: absolute;
     display: grid;
-    top:16%;
-    left:82%;
-    border-radius: 5px;
+    top:90%;
+    left:5%;
+    border-radius: 20px;
     cursor:pointer;
-    width: 200px;
-    height: 35px;
+    width: 303px;
+    height: 60px;
     flex-shrink: 0;
+    border-radius: 20px;
     background: #be1414;
-    border: 2px solid #ffffff;
+    box-shadow: 0px 4px 4px 0px #000;
 }
 
 .save_button_text
@@ -381,13 +382,16 @@ body {
 
 .ing_card_text
 {
+    overflow-y: hidden;
+    word-break: break-all;
     display: flex;
     align-items:center;
     justify-content:center;
     position:absolute;
     bottom: 0%;
     width: 235px;
-    height:35px;
+    max-height:35px;
+    min-height:35px;
     text-align: center;
     vertical-align: middle;
     color: #000;
@@ -396,6 +400,7 @@ body {
     font-style:inherit;
     font-weight: 400;
     line-height: normal;
+
 }
 
 .ing_card:hover
@@ -426,8 +431,8 @@ body {
     align-items: center;
     width: 30px;
     height: 30px;
-    top:2px;
-    right:0%;
+    top:15px;
+    right:50px;
 }
 
 .ing_card_image_base .essential_info
@@ -794,7 +799,7 @@ input[type=text]::placeholder {
     font-style: normal;
     font-weight: 700;
     line-height: 50px;
-    color: #be1414;
+    color: #ffa1a1;
     background-color: #ffffff;
     border-radius: 3px;
     cursor: pointer;
@@ -878,7 +883,7 @@ input[type=text]::placeholder {
     font-style: normal;
     font-weight: 700;
     line-height: 50px;
-    color: #be1414;
+    color: #ffa1a1;
     cursor: pointer;
     transition: all 0.05s ease-in-out;
   }

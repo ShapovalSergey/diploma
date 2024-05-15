@@ -6,7 +6,7 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.http import JsonResponse, HttpResponse, FileResponse
 from .models import Characteristic
-from .models import Ingredients
+from .models import Ingredients, ConcreateIngredients
 from .models import IngChar
 from .models import IngCT
 from .models import CIChar
@@ -41,7 +41,13 @@ def gotoingredients(request):
     return render(request, "ingredients.html",{"ing_info": ing_info,}) 
 
 def gotoconcingredients(request):
-    return render(request, "concingredients.html") 
+    ing_types=Ingredients.objects.all()
+    ing_all = {}
+    ing_info=[]
+    for i in ing_types:
+        ing_all={'name':i.name,'id':i.id,'image':i.image,'IsEssential':i.IsEssential,'IsVisible':i.IsVisible}
+        ing_info.append(ing_all)
+    return render(request, "concingredients.html",{"ing_info": ing_info,}) 
 
 def gotoparameters(request):
     param=Characteristic.objects.all()
@@ -170,7 +176,23 @@ def get_cake_info(request):
             name=cake.name
             img=cake.image
             return JsonResponse({'name':name, 'img': img})   
-            
+
+def get_ingridients(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        if request.method == 'GET':
+            ci_ids = []
+            ci_images = []
+            ci_names = []
+            name = request.GET.get('name')
+            ing=Ingredients.objects.get(name=name)
+            id=ing.id   
+            ci = ConcreateIngredients.objects.filter(Id_ing=ing)
+            for c in ci:
+                ci_ids.append(c.id)
+                ci_images.append(c.image)
+                ci_names.append(c.name)
+            return JsonResponse({'ci_ids':ci_ids,'ci_images':ci_images,'ci_names':ci_names,})            
 
 
 @csrf_exempt      
