@@ -159,6 +159,16 @@ body {
     margin-top: 3%;
 }
 
+.concing_field
+{
+    overflow:hidden;
+    overflow-y: scroll;
+    width: 1000px;
+    height: 450px;
+    max-height: 450px;
+    margin-top: 3%;
+}
+
 .chars_param
 {
     margin-top:20px;

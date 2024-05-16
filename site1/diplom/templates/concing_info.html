@@ -1,0 +1,82 @@
+<!doctype html>
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diplom</title>
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Inter:wght@400;700&family=Montserrat:wght@700&family=Noto+Sans:wght@700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>
+</head>
+<input type="hidden" class="id" value="{{id}}" id="id">
+<input type="hidden" class="id" value="{{ing_id}}" id="id_ing">
+<body style='overflow-x:hidden; margin:0%'>
+    <div class="main">
+        <div class="main_button" onclick="gotoIngredients()">
+            <div class="main_button_text">Назад</div>
+        </div>
+        <div class="save_button" onclick="SaveConcIngredient('{{id}}')">
+            <div class="save_button_text" >Сохранить</div>
+        </div>
+        {% if id != 'new' %}
+        <div class="delete_button" onclick="DeleteConcIngredient('{{id}}')">
+            <div class="save_button_text">Удалить</div>
+            <div class="image_bin"><img src="{% static ""%}images/recycle_bin.png" class="image"></div>
+        </div>
+        {% endif %}
+
+        <div class="ing_info_field">
+            <div class="ing_info_field_row"><input class="inp" type="text"  placeholder="Название" id="input_{{id}}" plain_id="{{id}}" value="{{name}}" old_name="{{name}}" style="min-width:400px" name="Название"></div>
+            <div class="ing_info_field_row"><div class="checkbox_text" style="font-size: 20px; width: 400px;">Изображение:</div><input type='file' id='userFile' style="cursor: pointer;" oldImage="{{image}}"></div>
+            <div class="ing_info_field_row">
+                {% if isVisible != False %}
+                <div class="checkbox_text" style="font-size: 20px; width: 400px;">Отображаемое изображение:</div><input type='file' id='VisibleUserFile' style="cursor: pointer;" oldImage="{{visibleimage}}">
+                {% endif %}
+            </div>
+            <div class="ing_info_field_row" style="margin-bottom: 40px;"><div class="cc_text">Введите значение параметров</div></div>
+            <div class="concing_field">
+                <div class="ing_info_field_row" style="margin-bottom: 10px;">
+                    <div class="checkbox_text" style="font-size: 20px; max-width: 400px;font-style: italic;">Стоимость</div>
+                    <input class="inp" type="text" id="input_val" plain_id="val" value="{{value}}" style="min-width:100px; max-width:150px;" name="Стоимость">
+                </div> 
+                {% for i in ingch_info %}
+                <div class="ing_info_field_row" style="margin-bottom: 10px;">
+                    <div class="checkbox_text" style="font-size: 20px; max-width: 400px;font-style: italic;">{{i.name}}</div>
+                    <input class="inp" type="text" id="input_{{i.id}}" plain_id="{{i.id}}" value="{{i.value}}" style="min-width:100px; max-width:150px;" name="{{i.name}}">
+                </div> 
+                {% endfor %}
+            </div>
+
+
+        </div>
+
+    </div>
+    <script type="text/javascript">
+        function imgLoad() {
+            img=document.getElementById("userFile").getAttribute("oldImage");
+            img1=document.getElementById("VisibleUserFile").getAttribute("oldImage");
+            const myFile = new File(['Hello World!'], img, {
+                type: 'text/plain',
+                lastModified: new Date(),
+            });
+            const myFile1 = new File(['Hello World!'], img1, {
+                type: 'text/plain',
+                lastModified: new Date(),
+            });
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(myFile);
+            document.getElementById("userFile").files = dataTransfer.files;
+            const dataTransfer1 = new DataTransfer();
+            dataTransfer1.items.add(myFile1);
+            document.getElementById("VisibleUserFile").files = dataTransfer1.files;
+        }
+        window.onload = imgLoad();
+        </script>
+    <script src="{% static "js/main.js"%}"></script>
+    <script src="{% static "js/conc_ingredients.js"%}"></script>
+</body>
+</html>

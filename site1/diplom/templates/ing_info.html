@@ -41,6 +41,11 @@
                 {% else %}
                 <div class="checkbox_text" style="font-size: 20px; width: 180px;">Отображать:</div><input type="checkbox" id="isVisible" checked/>
                 {% endif %}
+                {% if isConstruct == False %}
+                <div class="checkbox_text" style="font-size: 20px; width: 210px;">free constructor:</div><input type="checkbox" id="isConstruct">
+                {% else %}
+                <div class="checkbox_text" style="font-size: 20px; width: 210px;">free constructor:</div><input type="checkbox" id="isConstruct" checked/>
+                {% endif %}
             </div>
             <div class="ing_info_field_row"><div class="cc_text">Параметры</div><div class="cc_text">Торты</div></div>
             <div class="ing_info_field_chars_cakes">

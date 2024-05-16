@@ -114,6 +114,13 @@ function saveChars ()
         {
             counter++;
         }
+        if (ParameteresName[i].value=="Название")
+        {
+            counter++;
+            alert("Недопустимое название параметра");
+            ParameteresName[i].value=="";
+        }
+        
     }
     if (counter>0)
     {

@@ -20,8 +20,10 @@ function SaveIngredient(id)
     {
         const visible = document.getElementById('isVisible');
         const essential = document.getElementById('isEssential');
+        const construct = document.getElementById('isConstruct');
         var isVisible = visible.checked;
         var isEssential = essential.checked;
+        var isConstruct = construct.checked;
         let param_ids=[];
         let param_isUsed=[];
         let cakes_ids=[];
@@ -96,6 +98,7 @@ function SaveIngredient(id)
                     formData.append('cakes_isUsed', cakes_isUsed);
                     formData.append('isEssential', isEssential);
                     formData.append('isVisible', isVisible);
+                    formData.append('isConstruct', isConstruct);
     
                     $.ajax({
                         url: "/saveingfile/",

@@ -7,6 +7,7 @@ class Ingredients(models.Model):
     image=models.TextField(max_length=100)
     IsVisible=models.BooleanField()
     IsEssential=models.BooleanField()
+    IsConstruct=models.BooleanField()
     class Meta:
         managed = True
         db_table = 'Ingredients'
@@ -67,6 +68,7 @@ class Dish(models.Model):
     name=models.TextField(max_length=60)
     Id_cake_type=models.ForeignKey(CakeType, on_delete=models.CASCADE)
     IsSaved=models.BooleanField()
+    IsConstructed=models.BooleanField()
 
     class Meta:
         managed = True
@@ -75,7 +77,7 @@ class Dish(models.Model):
 class DishIng(models.Model):
     Id_conc_ing=models.ForeignKey(ConcreateIngredients, on_delete=models.CASCADE)
     Id_dish=models.ForeignKey(Dish, on_delete=models.CASCADE)
-
+    Location=models.IntegerField()
     class Meta:
         managed = True
         db_table = 'DishIng'
