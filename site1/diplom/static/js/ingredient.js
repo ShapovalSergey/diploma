@@ -32,13 +32,13 @@ function SaveIngredient(id)
         const cakes=document.getElementsByClassName("cake_input");
         for (var i = 0; i < params.length; i++)
         {
-            param_ids.push(params[i].getAttribute("id"));
+            param_ids.push(params[i].getAttribute("plain_id"));
             param_isUsed.push(params[i].checked);
             console.log(param_ids[i]);
         }
         for (var i = 0; i < cakes.length; i++)
         {
-            cakes_ids.push(cakes[i].getAttribute("id"));
+            cakes_ids.push(cakes[i].getAttribute("plain_id"));
             cakes_isUsed.push(cakes[i].checked);
         }
 
@@ -146,5 +146,31 @@ function DeleteIngredient(id)
         });
         var local = location.pathname.split("/");
         document.location.href=local[0]+"/"+local[1];
+    }
+}
+
+function CheckParam(id)
+{
+    var inp = document.getElementById("param_"+id);
+    if (inp.checked)
+    {
+        inp.checked=false;
+    }
+    else
+    {
+        inp.checked=true;
+    }
+}
+
+function CheckCake(id)
+{
+    var inp = document.getElementById("cake_"+id);
+    if (inp.checked)
+    {
+        inp.checked=false;
+    }
+    else
+    {
+        inp.checked=true;
     }
 }

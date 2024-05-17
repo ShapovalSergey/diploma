@@ -17,6 +17,25 @@
         <div class="main_button" onclick="gotomain()">
             <div class="main_button_text">На главную</div>
         </div>
+        <div class="ing_info_field" style="height: 750px;max-width: 920px;">
+        <div class="ing_info_field_row" style="margin-top:60px;">
+            <div class="cc_text" style="width:600px;">Выберита торт, на основе которого будет создан новый, или нажмите на кнопку, чтобы открыть свободный конструктор</div>
+            <div class="free_constructor_button" onclick="gotoFreeConstructor()"><div class="free_constructor_text">Свободный конструктор</div></div>
+        </div>
+<div class="ing_info_field_chars_cakes" style="height:600px;bottom: 0%;margin-top:80px;">
+    <div class="cake_type_field">
+        {% for ct in ct_info %}
+        <div class="cake_type_card" onclick="gotoConstructCake({{ct.id}})" id="cake_{{ct.id}}" plain_id="{{ct.id}}">
+            <div class="cake_type_card_image"><img class="image" src="{% static ""%}images/cakes/{{ct.image}}" id="card_image_{{ct.id}}"></div>
+            <div class="button_text" id="card_text_{{ct.id}}">{{ct.name}}</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+</div>
     </div>
     <script src="{% static "js/main.js"%}"></script>
 </body>

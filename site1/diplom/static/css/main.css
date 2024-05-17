@@ -542,6 +542,7 @@ body {
     vertical-align: middle;
     border: 2px solid #be1414;
     border-radius: 5px;
+    cursor:pointer;
 }
 
 .cake_field_row
@@ -553,6 +554,7 @@ body {
     border-radius: 5px;
     display: flex;
     vertical-align: middle;
+    cursor:pointer;
 }
 
 .param_text
@@ -655,9 +657,36 @@ body {
     border: 2px solid #f8b3b3;
 }
 
+.free_constructor_button
+{   
+    right:0%;
+    display: grid;
+    border-radius: 10px;
+    cursor:pointer;
+    width: 200px;
+    height: 40px;
+    flex-shrink: 0;
+    background: #be1414;
+    box-shadow: 0px 4px 4px 0px #000;
+    border: 2px solid #ffffff;
+}
 
-
-
+.free_constructor_text
+{
+    width: 200px;
+    height: 40px;
+    display: flex;
+    align-items:center;
+    justify-content:center;
+    text-align: center;
+    vertical-align: middle;
+    color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
 
 
 

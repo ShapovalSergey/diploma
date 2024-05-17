@@ -17,7 +17,13 @@ def main(request):
     return render(request, "main.html") 
 
 def gotoconstructor(request):
-    return render(request, "constructor.html") 
+    cake_types=CakeType.objects.all()
+    ct_all = {}
+    ct_info=[]
+    for ct in cake_types:
+        ct_all={'name':ct.name,'id':ct.id,'image':ct.image}
+        ct_info.append(ct_all)
+    return render(request, "constructor.html",{"ct_info": ct_info,}) 
 
 def gotoorders(request):
     return render(request, "orders.html") 

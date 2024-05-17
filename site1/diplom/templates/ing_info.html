@@ -52,18 +52,18 @@
                 <div class="ing_info_field_c">
                     {% for p in parametres_info %}
                     {% if p.isUsed == False %}
-                    <div class="param_field_row"><div class="param_text" id="{{p.id}}">{{p.name}}</div><div class="input_field"><input type="checkbox" class="param_input" id="{{p.id}}"/></div></div>
+                    <div class="param_field_row" onclick="CheckParam({{p.id}})"><div class="param_text">{{p.name}}</div><div class="input_field"><input type="checkbox" class="param_input" id="param_{{p.id}}" plain_id="{{p.id}}"/></div></div>
                     {% else %}
-                    <div class="param_field_row"><div class="param_text" id="{{p.id}}">{{p.name}}</div><div class="input_field"><input type="checkbox" class="param_input" id="{{p.id}}" checked/></div></div>
+                    <div class="param_field_row" onclick="CheckParam({{p.id}})"><div class="param_text">{{p.name}}</div><div class="input_field"><input type="checkbox" class="param_input" id="param_{{p.id}}" plain_id="{{p.id}}" checked/></div></div>
                     {% endif %}
                     {% endfor %}
                 </div>
                 <div class="ing_info_field_c">
                     {% for c in cakes_info %}
                     {% if c.isUsed == False %}
-                    <div class="cake_field_row"><div class="image_cake_field"><img class="image" src="{% static ""%}images/cakes/{{c.image}}" id="card_image_{{c.id}}"></div><div class="cake_text" id="{{c.id}}">{{c.name}}</div><div class="input_field" style="height: 80px;"><input type="checkbox" class="cake_input" id="{{c.id}}"/></div></div>
+                    <div class="cake_field_row" onclick="CheckCake({{c.id}})"><div class="image_cake_field"><img class="image" src="{% static ""%}images/cakes/{{c.image}}" id="card_image_{{c.id}}"></div><div class="cake_text">{{c.name}}</div><div class="input_field" style="height: 80px;"><input type="checkbox" class="cake_input" id="cake_{{c.id}}" plain_id="{{c.id}}"/></div></div>
                     {% else %}
-                    <div class="cake_field_row"><div class="image_cake_field"><img class="image" src="{% static ""%}images/cakes/{{c.image}}" id="card_image_{{c.id}}"></div><div class="cake_text" id="{{p.id}}">{{c.name}}</div><div class="input_field" style="height: 80px;"><input type="checkbox" class="cake_input" id="{{c.id}}" checked/></div></div>
+                    <div class="cake_field_row" onclick="CheckCake({{c.id}})"><div class="image_cake_field"><img class="image" src="{% static ""%}images/cakes/{{c.image}}" id="card_image_{{c.id}}"></div><div class="cake_text">{{c.name}}</div><div class="input_field" style="height: 80px;"><input type="checkbox" class="cake_input" id="cake_{{c.id}}" plain_id="{{c.id}}" checked/></div></div>
                     {% endif %}
                     {% endfor %}
                 </div>
