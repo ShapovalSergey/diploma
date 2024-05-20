@@ -266,7 +266,6 @@ function SaveConcIngredient(id)
                   vis_img_name=vis_img_name.split('\\').pop().split('/').pop().split('.').pop();
                   if (vis_img_name=="") vis_img_name="ing_"+id+".png";
                   else vis_img_name="ing_"+id+"."+vis_img_name;
-                  alert(vis_img_name);
                   file1 = document.getElementById("VisibleUserFile").files[0];
                   /*Сохранение данных*/
                   let formData = new FormData();

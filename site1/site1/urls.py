@@ -46,4 +46,5 @@ urlpatterns = [
     path('ingredients/ingredient_<str:ing_id>', views.gotoingredientinfo, name="gotoingredientinfo"),
     path('concingredients/<int:ing_id>/new', views.gotoaddconcing, name="gotoaddconcing"),
     path('concingredients/<int:ci_id>', views.gotoconcing, name="gotoconcing"),
+    path('constructor/free', views.gotofreeconstructor, name="gotofreeconstructor"),
 ]

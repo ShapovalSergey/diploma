@@ -1,0 +1,78 @@
+<!doctype html>
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diplom</title>
+<link rel="stylesheet" href="{% static 'css/constructor.css' %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Inter:wght@400;700&family=Montserrat:wght@700&family=Noto+Sans:wght@700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>
+</head>
+<body style='overflow-x:hidden; margin:0%'>
+    <div class="main">
+        <div class="free_constructor_button" onclick="gobacktoConstructor()" style="z-index: 100;"><div class="free_constructor_text">Назад</div></div>
+
+        <div class="firstpage" id="spage">
+            <div class="secondtitle" id="sectitle">
+                Конструктор
+            </div>
+            {% if ing.count > 11 %}
+            <div class="wrapper" style="grid-template-columns: repeat({{ing.count}}, 130px);justify-content:start;" id="wrapper1">
+            {% else %}
+            <div class="wrapper" style="grid-template-columns: repeat({{ing.count}}, 130px);" id="wrapper1"></div>
+            {% endif %}  
+                {% if ing.count > 0 %}
+                {% for i in ing %} 
+              <div><button class="components" id="{{i.id}}"><img class="image" src="{% static ""%}images/ingridients/{{i.image}}" style="cursor: pointer;border-radius: 130px;position: absolute;top: 0%;left: 0%;"></button> <div class="CIname" style="margin-top: 5px; margin-left: 30px;">{{i.name}}</div></div>
+                {% endfor %}
+                {% endif %}         
+            </div>
+            <div class="cus_col" style="margin-left: 65px; margin-top: 30px; grid-template-columns: repeat({{ing.count}}, 160px);">
+                <div class="cus_col fishka">
+                    <div class="fishka_additional" id="fishka_additional">
+                    </div>
+                    <div class="fishka_start"></div>
+                 <div class="fishka bread" style="margin-top: 425px;left: 0px; opacity: 0.99;"><img class="image" src="{% static ""%}images/base.png"></div>
+                </div>
+                {% if ing.count > 11 %}
+                <div class="wrapper2" style="grid-template-columns: repeat({{ing.count}}, 160px);justify-content:start;" id="wrapper2">
+                {% else %}
+                <div class="wrapper2" style="grid-template-columns: repeat({{ing.count}}, 160px);" id="wrapper2"></div>
+                {% endif %} 
+                {% if ing.count > 0 %}
+                {% for i in ing %} 
+                {% for cica in ci_count_array %} 
+                {% if i.id == cica.id %}
+                <div class="yach" style="visibility:hidden;grid-template-rows: repeat({{cica.count}}, 130px);" id="yach{{i.id}}">
+                {% endif %}   
+                {% endfor %}  
+                    {% for c in ci %} 
+                    {% if i.id == c.Id_ing_id %}
+                    <div class="yach1" name="{{c.name}}" id="yach1_{{c.id}}" style="position: relative;" value="{{c.Value}}" count="0"> <div class="yach1 extra_components"><img class="image" src="{% static ""%}images/concingridients/{{c.image}}" style="border-radius: 100px;"><div class="CIname">{{c.name}}</div><div class="CIname" style="margin-left: -5px">({{c.Value}} рублей)</div> <div class="yach1 smallbuttonadd" id="smbutadd_{{c.id}}" onclick="addConcIng({{c.id}},'{{c.image_ready}}')"><img src="{% static "images/sm-add-circle.png"%}" ></div><div class="yach1 smallbuttondelete"id="smbutdelete_{{c.name}}"onclick="reduceConcIng({{c.id}},'{{c.name}}')"><img src="{% static "images/sm-remove-circle.png"%}" ></div></div></div>
+                    {% endif %}   
+                    {% endfor %}  
+                </div> 
+                {% endfor %}
+                {% endif %} 
+                </div>
+            </div>
+            <div class="basketicon" style="margin-top: 626px;" id="basicon2">
+                <img src="{% static "images/shoppingbasket.png"%}" onclick="openNav()" style="cursor: pointer;">
+            </div>
+            {% csrf_token %}
+            <div class="buttonsecondorder" onclick="makeorder()" style="cursor: pointer; visibility:visible" id="butsecord">
+            <div class="secondordertext">
+                Создать блюдо 
+            </div></div>
+            <div class="itogoname" id="itogvalue" style="text-align:center; margin-top: -1%;margin-left: 65%; font-size: 27px;" value="0">Итоговая стоимость: 0 ₽</div>  
+        </div>
+    </div>
+    <script src="{% static "js/main.js"%}"></script>
+    <script src="{% static "js/constructor.js"%}"></script>
+    <script src="{% static "js/custom_script.js"%}"></script>
+</body>
+</html>

@@ -138,6 +138,13 @@ def gotoconcing(request,ci_id):
         ingch_info.append(ingch_all)
     return render(request, "concing_info.html",{"ing_id": ci.Id_ing.id,"id":ci_id, "isVisible":ing.IsVisible,"ingch_info":ingch_info,"name":Name,"image":image,"visibleimage":visibleimage,"value":Value}) 
 
+def gotofreeconstructor(request):
+    ing=Ingredients.objects.filter(IsConstruct=True)
+    ci = ConcreateIngredients.objects.all()
+    ci_count_array=[]
+    for i in ing:
+        ci_count_array.append({"id":i.id,"count":ConcreateIngredients.objects.filter(Id_ing=i).count()})
+    return render(request, "free_constructor.html", {"ing": ing, "ci":ci,"ci_count_array":ci_count_array}) 
 
 
 
@@ -329,6 +336,10 @@ def saveingfile(request):
                 isConstruct=True
             else:
                 isConstruct=False 
+            if isFileChanged=="true":
+                isFileChanged=True
+            else:
+                isFileChanged=False 
             file=default_storage.open('D:\games\diploma\site1\diplom\static\images\ingridients\\test_ing.png')
             if id=="new":
                 ing=Ingredients(name=name,IsEssential=isEssential,IsVisible=isVisible,IsConstruct=isConstruct)
@@ -374,7 +385,15 @@ def saveconcingfile(request):
             name = request.POST.get("name") 
             id = request.POST.get("id") 
             isFileChanged = request.POST.get("isFileChanged") 
+            if isFileChanged=="true":
+                isFileChanged=True
+            else:
+                isFileChanged=False 
             isVisibleFileChanged = request.POST.get("isVisibleFileChanged") 
+            if isVisibleFileChanged=="true":
+                isVisibleFileChanged=True
+            else:
+                isVisibleFileChanged=False 
             param_ids = request.POST.getlist('param_ids')[0].split(',')
             param_values = request.POST.getlist('param_values')[0].split(',')
             file=default_storage.open('D:\games\diploma\site1\diplom\static\images\ingridients\\test_ing.png')
@@ -399,6 +418,7 @@ def saveconcingfile(request):
                 newingchar=CIChar(Id_conc_ing=ing,Id_char=Characteristic.objects.get(id=p), Value=param_values[index])
                 newingchar.save()
             ing.save()
+            print(isVisibleFileChanged==False)
             if isFileChanged:
                 if str(uploaded_file)!="None":
                     path = default_storage.save('D:\games\diploma\site1\diplom\static\images\concingridients\ing_'+str(ing.id)+"."+ing.image.split(".")[1], ContentFile(uploaded_file.read()))
