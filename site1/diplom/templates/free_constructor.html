@@ -23,11 +23,11 @@
             {% if ing.count > 11 %}
             <div class="wrapper" style="grid-template-columns: repeat({{ing.count}}, 130px);justify-content:start;" id="wrapper1">
             {% else %}
-            <div class="wrapper" style="grid-template-columns: repeat({{ing.count}}, 130px);" id="wrapper1"></div>
+            <div class="wrapper" style="grid-template-columns: repeat({{ing.count}}, 130px);" id="wrapper1">
             {% endif %}  
                 {% if ing.count > 0 %}
                 {% for i in ing %} 
-              <div><button class="components" id="{{i.id}}"><img class="image" src="{% static ""%}images/ingridients/{{i.image}}" style="cursor: pointer;border-radius: 130px;position: absolute;top: 0%;left: 0%;"></button> <div class="CIname" style="margin-top: 5px; margin-left: 30px;">{{i.name}}</div></div>
+              <div><button class="components" id="{{i.id}}"><img class="image" src="{% static ""%}images/ingridients/{{i.image}}" style="cursor: pointer;border-radius: 130px;position: absolute;top: 0%;left: 0%;"></button> <div class="CIname" style="margin-top: 5px; margin-left: 0px;">{{i.name}}</div></div>
                 {% endfor %}
                 {% endif %}         
             </div>
@@ -41,7 +41,7 @@
                 {% if ing.count > 11 %}
                 <div class="wrapper2" style="grid-template-columns: repeat({{ing.count}}, 160px);justify-content:start;" id="wrapper2">
                 {% else %}
-                <div class="wrapper2" style="grid-template-columns: repeat({{ing.count}}, 160px);" id="wrapper2"></div>
+                <div class="wrapper2" style="grid-template-columns: repeat({{ing.count}}, 160px);" id="wrapper2">
                 {% endif %} 
                 {% if ing.count > 0 %}
                 {% for i in ing %} 

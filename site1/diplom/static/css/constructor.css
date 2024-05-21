@@ -242,8 +242,8 @@ body::-webkit-scrollbar
 {
     position:relative;
     margin-top: 30px;
-    margin-left: 15px;
-    margin-right: 15px;
+    margin-left: 0px;
+    margin-right: 0px;
     width: 130px;
     height: 130px;
     flex-shrink: 0;
