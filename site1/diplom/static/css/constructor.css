@@ -212,6 +212,7 @@ body::-webkit-scrollbar
 .secondtitle
 {
     width: 1760;
+    max-width: 1760;
     color: #FFF;
     margin-left: 80px;
     margin-top: 20px;
@@ -220,7 +221,7 @@ body::-webkit-scrollbar
     font-size: 60px;
     font-style: normal;
     font-weight: 700;
-    line-height: 119.5%;
+    line-height: 60px;
 }
 
 
@@ -802,13 +803,70 @@ body::-webkit-scrollbar
     visibility:hidden;
   }
 
+.param_block
+{
+  position:absolute;
+  left:0; 
+  top:0;
+  margin-left:1425px ;
+  margin-top: 350px;
+  width: 350px;
+  height: 400px;
+  z-index:5;
+  border-radius: 20px;
+  border: 1px solid #FFF;
+}
+
+.param_block_title
+{
+  position:absolute;
+  left:0; 
+  top:0;
+  width: 350px;
+  height: 50px;
+  text-align: center;
+  color: #FFF;
+  font-family: 'Amatic SC',sans-serif ;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
 
 
+.param_block_text
+{
+  overflow-y: scroll;
+  overflow-x: hidden;
+  position:absolute;
+  left:25px; 
+  bottom:5px;
+  width: 300px;
+  height: 345px;
+  text-align: left;
+  color: #FFF;
+  font-family: 'Amatic SC',sans-serif ;
+  font-size: 34px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  word-break: break-all;
+}
 
-
-
-
-
+.param_text
+{
+  position:relative;
+  width: 300px;
+  height: 34.5px;
+  text-align: left;
+  color: #FFF;
+  font-family: 'Amatic SC',sans-serif ;
+  font-size: 34px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  word-break: break-all;
+}
 
 
 

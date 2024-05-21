@@ -179,6 +179,31 @@ function secondstep()
 
 function deleteElem(id,name)
 {
+  real_id=document.getElementById(id).getAttribute('plain_id');
+  const value = JSON.parse(document.getElementById('hello-data').textContent);
+  arr = JSON.parse(value);
+  for (var i = 0; i < arr.length; i++)
+  {
+    if (arr[i].id==real_id)
+    {
+      for (var j = 0; j < arr[i].param.length; j++)
+      {
+        usedparams=document.getElementsByClassName("param_text");
+        for (var l = 0; l < usedparams.length; l++)
+          {
+            if (arr[i].param[j].param_id==usedparams[l].getAttribute('plain_id'))
+            {
+              usedparams[l].setAttribute("value", parseFloat(usedparams[l].getAttribute('value'))-parseFloat(arr[i].param[j].param_value))
+              usedparams[l].textContent = usedparams[l].getAttribute('name') + " : " + usedparams[l].getAttribute('value');
+              if(usedparams[l].getAttribute('value')==0)
+              {
+                usedparams[l].remove();
+              }
+            }
+          }
+      }
+    }
+  }
   document.getElementById(id).remove();
   cell=document.getElementsByClassName("yach1");
   for (var i = 0; i < cell.length; i++)
@@ -220,6 +245,8 @@ function createElementsInside(id,value,name,img,otstup)
   elementDelete.setAttribute("name",name);
   elementDelete.onclick=function(){deleteElem(id,name);}
   elementDiv.setAttribute("id",id);
+  plain_id = img.split(/[_.]/)[1];
+  elementDiv.setAttribute("plain_id",plain_id);
   elementDiv.setAttribute("value",value);
   elementDiv.setAttribute("name",name);
   elementDiv.setAttribute("number",otstup);
@@ -275,8 +302,45 @@ function addConcIng(id,kar)
     {
       document.getElementById('smbutdelete_'+ document.getElementById('yach1_'+ id).getAttribute('name')).style.cursor='pointer';
     }
-                
-  }
+        
+
+    const value = JSON.parse(document.getElementById('hello-data').textContent);
+    arr = JSON.parse(value);
+    for (var i = 0; i < arr.length; i++)
+    {
+      if (arr[i].id==id)
+      {
+        for (var j = 0; j < arr[i].param.length; j++)
+        {
+          find_param=0;
+          usedparams=document.getElementsByClassName("param_text");
+          for (var l = 0; l < usedparams.length; l++)
+            {
+              if (arr[i].param[j].param_id==usedparams[l].getAttribute('plain_id'))
+              {
+                usedparams[l].setAttribute("value", parseFloat(usedparams[l].getAttribute('value'))+parseFloat(arr[i].param[j].param_value))
+                usedparams[l].textContent = usedparams[l].getAttribute('name') + " : " + usedparams[l].getAttribute('value');
+                find_param=1;
+              }
+            }
+            if (find_param==0)
+            {
+              const rootDiv = document.getElementsByClassName("param_text");
+              const elementDiv = document.createElement("div");
+              elementDiv.setAttribute("id",'param_'+arr[i].param[j].param_id);
+              elementDiv.setAttribute("plain_id",arr[i].param[j].param_id);
+              elementDiv.setAttribute("name",arr[i].param[j].param_name);
+              elementDiv.setAttribute("value",arr[i].param[j].param_value);
+              elementDiv.textContent = arr[i].param[j].param_name+" : "+arr[i].param[j].param_value;
+              elementDiv.classList.add('param_text');
+              rootDiv[0].appendChild(elementDiv);
+            }
+        }
+      }
+    }
+
+
+    }
 }
 
 function bubbleSortConcept1(arr) 
@@ -312,6 +376,31 @@ function reduceConcIng(id,name)
     if(Number(document.getElementById('yach1_'+ id).getAttribute('count'))<1)
     {
       document.getElementById('smbutdelete_'+ document.getElementById('yach1_'+ id).getAttribute('name')).style.cursor='default';
+    }
+
+    const value = JSON.parse(document.getElementById('hello-data').textContent);
+    arr = JSON.parse(value);
+    for (var i = 0; i < arr.length; i++)
+    {
+      if (arr[i].id==id)
+      {
+        for (var j = 0; j < arr[i].param.length; j++)
+        {
+          usedparams=document.getElementsByClassName("param_text");
+          for (var l = 0; l < usedparams.length; l++)
+            {
+              if (arr[i].param[j].param_id==usedparams[l].getAttribute('plain_id'))
+              {
+                usedparams[l].setAttribute("value", parseFloat(usedparams[l].getAttribute('value'))-parseFloat(arr[i].param[j].param_value))
+                usedparams[l].textContent = usedparams[l].getAttribute('name') + " : " + usedparams[l].getAttribute('value');
+                if(usedparams[l].getAttribute('value')==0)
+                {
+                  usedparams[l].remove();
+                }
+              }
+            }
+        }
+      }
     }
   }
 }

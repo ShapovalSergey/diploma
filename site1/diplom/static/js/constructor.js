@@ -15,3 +15,9 @@ $(document).ready(function() {
     var local = location.pathname.split("/");
     document.location.href=local[0]+"/"+local[1];
 }
+
+
+window.addEventListener("load", (event) => {
+  const value = JSON.parse(document.getElementById('hello-data').textContent);
+  //alert(value);
+});

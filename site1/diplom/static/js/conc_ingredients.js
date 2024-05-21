@@ -268,6 +268,11 @@ function SaveConcIngredient(id)
                   else vis_img_name="ing_"+id+"."+vis_img_name;
                   file1 = document.getElementById("VisibleUserFile").files[0];
                   /*Сохранение данных*/
+                  if (id=="new") 
+                  {
+                    isFileChanged=true;
+                    isVisibleFileChanged=true;
+                  }
                   let formData = new FormData();
                   formData.append('photo', file);
                   formData.append('visible_photo', file1);

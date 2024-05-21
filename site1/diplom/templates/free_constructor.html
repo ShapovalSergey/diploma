@@ -15,7 +15,12 @@
 <body style='overflow-x:hidden; margin:0%'>
     <div class="main">
         <div class="free_constructor_button" onclick="gobacktoConstructor()" style="z-index: 100;"><div class="free_constructor_text">Назад</div></div>
-
+<div class="param_block">
+    <div class="param_block_title"> Параметры: </div>
+    <div class="param_block_text" id="param_text">
+        <div class="param_text"></div>
+    </div>
+</div>
         <div class="firstpage" id="spage">
             <div class="secondtitle" id="sectitle">
                 Конструктор
@@ -52,7 +57,7 @@
                 {% endfor %}  
                     {% for c in ci %} 
                     {% if i.id == c.Id_ing_id %}
-                    <div class="yach1" name="{{c.name}}" id="yach1_{{c.id}}" style="position: relative;" value="{{c.Value}}" count="0"> <div class="yach1 extra_components"><img class="image" src="{% static ""%}images/concingridients/{{c.image}}" style="border-radius: 100px;"><div class="CIname">{{c.name}}</div><div class="CIname" style="margin-left: -5px">({{c.Value}} рублей)</div> <div class="yach1 smallbuttonadd" id="smbutadd_{{c.id}}" onclick="addConcIng({{c.id}},'{{c.image_ready}}')"><img src="{% static "images/sm-add-circle.png"%}" ></div><div class="yach1 smallbuttondelete"id="smbutdelete_{{c.name}}"onclick="reduceConcIng({{c.id}},'{{c.name}}')"><img src="{% static "images/sm-remove-circle.png"%}" ></div></div></div>
+                    <div class="yach1" name="{{c.name}}" id="yach1_{{c.id}}" style="position: relative;" value="{{c.Value}}" count="0"> <div class="yach1 extra_components"><img class="image" src="{% static ""%}images/concingridients/{{c.image}}" style="border-radius: 100px;"><div class="CIname">{{c.name}}</div><div class="CIname" style="margin-left: -30px;min-width: 160px;text-align: center;">({{c.Value}} рублей)</div> <div class="yach1 smallbuttonadd" id="smbutadd_{{c.id}}" onclick="addConcIng({{c.id}},'{{c.image_ready}}')"><img src="{% static "images/sm-add-circle.png"%}" ></div><div class="yach1 smallbuttondelete"id="smbutdelete_{{c.name}}"onclick="reduceConcIng({{c.id}},'{{c.name}}')"><img src="{% static "images/sm-remove-circle.png"%}" ></div></div></div>
                     {% endif %}   
                     {% endfor %}  
                 </div> 
@@ -74,5 +79,6 @@
     <script src="{% static "js/main.js"%}"></script>
     <script src="{% static "js/constructor.js"%}"></script>
     <script src="{% static "js/custom_script.js"%}"></script>
+    {{ ci_param_info|json_script:"hello-data" }}
 </body>
 </html>

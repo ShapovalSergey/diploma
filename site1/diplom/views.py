@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings as django_settings
 import os
+import json
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.http import JsonResponse, HttpResponse, FileResponse, HttpResponseRedirect
@@ -142,9 +143,22 @@ def gotofreeconstructor(request):
     ing=Ingredients.objects.filter(IsConstruct=True)
     ci = ConcreateIngredients.objects.all()
     ci_count_array=[]
+    ci_param_info=[]
     for i in ing:
         ci_count_array.append({"id":i.id,"count":ConcreateIngredients.objects.filter(Id_ing=i).count()})
-    return render(request, "free_constructor.html", {"ing": ing, "ci":ci,"ci_count_array":ci_count_array}) 
+    for c in ci:
+        if c.Id_ing.IsConstruct==True:
+            id=c.id 
+            param_info=[]
+            params=CIChar.objects.filter(Id_conc_ing=c)
+            for p in params:
+                param_id=p.Id_char.id 
+                param_name=p.Id_char.name
+                param_value=p.Value
+                param_info.append({"param_id":param_id,"param_name":param_name,"param_value":param_value})
+            ci_param_info.append({"id":id,"param":param_info})
+
+    return render(request, "free_constructor.html", {"ing": ing, "ci":ci,"ci_count_array":ci_count_array,"ci_param_info":json.dumps(ci_param_info,ensure_ascii=False)}) 
 
 
 

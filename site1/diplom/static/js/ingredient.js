@@ -82,6 +82,7 @@ function SaveIngredient(id)
     
                         isFileChanged=true;
                     }
+                    if (id=="new") isFileChanged=true;
                     img_name=img_name.split('\\').pop().split('/').pop().split('.').pop();
                     if (img_name=="") img_name="ing_"+id+".png";
                     else img_name="ing_"+id+"."+img_name;
