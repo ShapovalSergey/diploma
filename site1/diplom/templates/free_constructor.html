@@ -27,7 +27,7 @@
             {% endif %}  
                 {% if ing.count > 0 %}
                 {% for i in ing %} 
-              <div><button class="components" id="{{i.id}}"><img class="image" src="{% static ""%}images/ingridients/{{i.image}}" style="cursor: pointer;border-radius: 130px;position: absolute;top: 0%;left: 0%;"></button> <div class="CIname" style="margin-top: 5px; margin-left: 0px;">{{i.name}}</div></div>
+              <div><button class="components" id="{{i.id}}"><img class="image" src="{% static ""%}images/ingridients/{{i.image}}" style="cursor: pointer;border-radius: 130px;position: absolute;top: 0%;left: 0%;"></button> <div class="CIname" style="margin-top: 5px; margin-left: 30px;">{{i.name}}</div></div>
                 {% endfor %}
                 {% endif %}         
             </div>
@@ -41,13 +41,13 @@
                 {% if ing.count > 11 %}
                 <div class="wrapper2" style="grid-template-columns: repeat({{ing.count}}, 160px);justify-content:start;" id="wrapper2">
                 {% else %}
-                <div class="wrapper2" style="grid-template-columns: repeat({{ing.count}}, 160px);" id="wrapper2">
+                <div class="wrapper2" style="grid-template-columns: repeat({{ing.count}}, 160px);margin-left:15px;" id="wrapper2">
                 {% endif %} 
                 {% if ing.count > 0 %}
                 {% for i in ing %} 
                 {% for cica in ci_count_array %} 
                 {% if i.id == cica.id %}
-                <div class="yach" style="visibility:hidden;grid-template-rows: repeat({{cica.count}}, 130px);" id="yach{{i.id}}">
+                <div class="yach" style="visibility:hidden;grid-template-rows: repeat({{cica.count}}, 160px);" id="yach{{i.id}}">
                 {% endif %}   
                 {% endfor %}  
                     {% for c in ci %} 
