@@ -12,6 +12,7 @@ from .models import IngChar
 from .models import IngCT, CIChar
 from .models import CIChar
 from .models import CakeType
+from .models import Dish, DishIng
 # Create your views here.
 
 def main(request):
@@ -139,7 +140,7 @@ def gotoconcing(request,ci_id):
         ingch_info.append(ingch_all)
     return render(request, "concing_info.html",{"ing_id": ci.Id_ing.id,"id":ci_id, "isVisible":ing.IsVisible,"ingch_info":ingch_info,"name":Name,"image":image,"visibleimage":visibleimage,"value":Value}) 
 
-def gotofreeconstructor(request):
+def gotofreeconstructor(request,dish_id):
     ing=Ingredients.objects.filter(IsConstruct=True)
     ci = ConcreateIngredients.objects.all()
     ci_count_array=[]
@@ -158,7 +159,7 @@ def gotofreeconstructor(request):
                 param_info.append({"param_id":param_id,"param_name":param_name,"param_value":param_value})
             ci_param_info.append({"id":id,"param":param_info})
 
-    return render(request, "free_constructor.html", {"ing": ing, "ci":ci,"ci_count_array":ci_count_array,"ci_param_info":json.dumps(ci_param_info,ensure_ascii=False)}) 
+    return render(request, "free_constructor.html", {"ing": ing, "ci":ci,"ci_count_array":ci_count_array,"ci_param_info":json.dumps(ci_param_info,ensure_ascii=False),"id":dish_id}) 
 
 
 
@@ -213,6 +214,22 @@ def check_ing_name(request):
                 else:
                     check=1
             return JsonResponse({'check':check, })   
+
+def check_dish_name(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        if request.method == 'GET':
+            name = request.FILES.get('name')
+            id = request.POST.get("id") 
+            dishes = Dish.objects.filter(name=name)
+            if id=='new':
+                check=True
+            else: 
+                if dishes.count()!=0:
+                    check=False
+                else: 
+                    check=True
+            return JsonResponse({'check':check, }) 
 
 def check_concing_name(request):
     is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
@@ -322,6 +339,21 @@ def savefile(request):
             ct.save()
             file.close()
             return HttpResponse("POST request")
+
+@csrf_exempt      
+def savenewdish(request):
+    newdict = request.POST.dict()
+    name=newdict['name']
+    new_dish = Dish(name=name)
+    new_dish.save()
+    location = str(newdict['locations']).split(",")
+    ids=str(newdict['ids']).split(",")
+    for index,i in enumerate(ids):
+        new_zap = DishIng(Id_conc_ing=ConcreateIngredients.objects.get(id=int(ids[index])),Id_dish=new_dish,Location=int(location[index]))
+        new_zap.save()
+    return HttpResponse("POST request")
+
+
 
 @csrf_exempt      
 def saveingfile(request):

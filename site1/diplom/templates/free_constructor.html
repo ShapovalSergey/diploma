@@ -13,13 +13,14 @@
 <script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>
 </head>
 <body style='overflow-x:hidden; margin:0%'>
+    <input type="hidden" class="id" value="{{id}}" id="id">
     <div class="main">
         <div class="free_constructor_button" onclick="gobacktoConstructor()" style="z-index: 100;"><div class="free_constructor_text">Назад</div></div>
         <div class="add_cake_back">
             <div class="add_cake_window" id="popup">
                 <div class="close_popup_button" onclick="closePopup()"><img src="{% static "images/close-button.png"%}"></div>
                 <div class="popup_row" style="top:50%;"><input class="inp1" placeholder="Название" type="text" id="cake_name" style="min-width: 20vw; text-align: center;"></input></div>
-                <div class="popup_row" style="top:15%;"><div class="popup_text">Введите информацию для создания нового блюда</div></div>
+                <div class="popup_row" style="top:35%;"><div class="popup_text">Введите информацию для создания нового блюда</div></div>
                 <div class="popup_row" style="top:85%;">
                 <div class="save_cake_button" onclick="savenewCake()" style="width: 200px;height: 40px; left:35%; top:85%; background:#be1414;">
                     <div class="save_button_text" style="width: 200px;height: 40px;">Сохранить</div>

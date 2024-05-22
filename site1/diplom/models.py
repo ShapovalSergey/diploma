@@ -66,9 +66,9 @@ class CIChar(models.Model):
 
 class Dish(models.Model):
     name=models.TextField(max_length=60)
-    Id_cake_type=models.ForeignKey(CakeType, on_delete=models.CASCADE)
-    IsSaved=models.BooleanField()
-    IsConstructed=models.BooleanField()
+    Id_cake_type=models.ForeignKey(CakeType, on_delete=models.CASCADE,null=True)
+    IsSaved=models.BooleanField(null=True)
+    IsConstructed=models.BooleanField(null=True)
 
     class Meta:
         managed = True
