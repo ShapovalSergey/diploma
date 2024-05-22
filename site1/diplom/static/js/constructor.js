@@ -118,6 +118,11 @@ function savenewCake()
         data.append('ids',ids);
         requestObject.send(data);
         closePopup();
+        var conc_ing = document.getElementsByClassName("yach");
+        for (var i = 0; i < conc_ing.length; i++) 
+        {
+          conc_ing[i].style.visibility='hidden';
+        }
         setTimeout('gobacktoConstructor()',3000);
       }
     },
