@@ -49,4 +49,5 @@ urlpatterns = [
     path('concingredients/<int:ing_id>/new', views.gotoaddconcing, name="gotoaddconcing"),
     path('concingredients/<int:ci_id>', views.gotoconcing, name="gotoconcing"),
     path('constructor/free_<str:dish_id>', views.gotofreeconstructor, name="gotofreeconstructor"),
+    path('constructor/constructor_<int:cake_id>', views.gotoconstructcake, name="gotoconstructcake"),
 ]

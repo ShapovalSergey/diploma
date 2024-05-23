@@ -20,30 +20,7 @@ for (var i = 0; i < buttons.length; i++) {
 function deleteElem(id,name)
 {
   real_id=document.getElementById(id).getAttribute('plain_id');
-  const value = JSON.parse(document.getElementById('hello-data').textContent);
-  arr = JSON.parse(value);
-  for (var i = 0; i < arr.length; i++)
-  {
-    if (arr[i].id==real_id)
-    {
-      for (var j = 0; j < arr[i].param.length; j++)
-      {
-        usedparams=document.getElementsByClassName("param_text");
-        for (var l = 0; l < usedparams.length; l++)
-          {
-            if (arr[i].param[j].param_id==usedparams[l].getAttribute('plain_id'))
-            {
-              usedparams[l].setAttribute("value", parseFloat(usedparams[l].getAttribute('value'))-parseFloat(arr[i].param[j].param_value))
-              usedparams[l].textContent = usedparams[l].getAttribute('name') + " : " + usedparams[l].getAttribute('value');
-              if(usedparams[l].getAttribute('value')==0)
-              {
-                usedparams[l].remove();
-              }
-            }
-          }
-      }
-    }
-  }
+  decreaseCharacteristics(real_id);
   document.getElementById(id).remove();
   cell=document.getElementsByClassName("yach1");
   for (var i = 0; i < cell.length; i++)
@@ -142,42 +119,8 @@ function addConcIng(id,kar)
     {
       document.getElementById('smbutdelete_'+ document.getElementById('yach1_'+ id).getAttribute('name')).style.cursor='pointer';
     }
-        
-
-    const value = JSON.parse(document.getElementById('hello-data').textContent);
-    arr = JSON.parse(value);
-    for (var i = 0; i < arr.length; i++)
-    {
-      if (arr[i].id==id)
-      {
-        for (var j = 0; j < arr[i].param.length; j++)
-        {
-          find_param=0;
-          usedparams=document.getElementsByClassName("param_text");
-          for (var l = 0; l < usedparams.length; l++)
-            {
-              if (arr[i].param[j].param_id==usedparams[l].getAttribute('plain_id'))
-              {
-                usedparams[l].setAttribute("value", parseFloat(usedparams[l].getAttribute('value'))+parseFloat(arr[i].param[j].param_value))
-                usedparams[l].textContent = usedparams[l].getAttribute('name') + " : " + usedparams[l].getAttribute('value');
-                find_param=1;
-              }
-            }
-            if (find_param==0)
-            {
-              const rootDiv = document.getElementsByClassName("param_text");
-              const elementDiv = document.createElement("div");
-              elementDiv.setAttribute("id",'param_'+arr[i].param[j].param_id);
-              elementDiv.setAttribute("plain_id",arr[i].param[j].param_id);
-              elementDiv.setAttribute("name",arr[i].param[j].param_name);
-              elementDiv.setAttribute("value",arr[i].param[j].param_value);
-              elementDiv.textContent = arr[i].param[j].param_name+" : "+arr[i].param[j].param_value;
-              elementDiv.classList.add('param_text');
-              rootDiv[0].appendChild(elementDiv);
-            }
-        }
-      }
-    }
+    
+    addChaarcteristics(id);
 
 
     }
@@ -217,30 +160,92 @@ function reduceConcIng(id,name)
     {
       document.getElementById('smbutdelete_'+ document.getElementById('yach1_'+ id).getAttribute('name')).style.cursor='default';
     }
+  }
+}
 
-    const value = JSON.parse(document.getElementById('hello-data').textContent);
-    arr = JSON.parse(value);
-    for (var i = 0; i < arr.length; i++)
+function addChaarcteristics(id)
+{
+  const value = JSON.parse(document.getElementById('hello-data').textContent);
+  arr = JSON.parse(value);
+  for (var i = 0; i < arr.length; i++)
+  {
+    if (arr[i].id==id)
     {
-      if (arr[i].id==id)
+      for (var j = 0; j < arr[i].param.length; j++)
       {
-        for (var j = 0; j < arr[i].param.length; j++)
-        {
-          usedparams=document.getElementsByClassName("param_text");
-          for (var l = 0; l < usedparams.length; l++)
+        find_param=0;
+        usedparams=document.getElementsByClassName("param_text");
+        for (var l = 0; l < usedparams.length; l++)
+          {
+            if (arr[i].param[j].param_id==usedparams[l].getAttribute('plain_id'))
             {
-              if (arr[i].param[j].param_id==usedparams[l].getAttribute('plain_id'))
-              {
-                usedparams[l].setAttribute("value", parseFloat(usedparams[l].getAttribute('value'))-parseFloat(arr[i].param[j].param_value))
-                usedparams[l].textContent = usedparams[l].getAttribute('name') + " : " + usedparams[l].getAttribute('value');
-                if(usedparams[l].getAttribute('value')==0)
-                {
-                  usedparams[l].remove();
-                }
-              }
+              usedparams[l].setAttribute("value", parseFloat(usedparams[l].getAttribute('value'))+parseFloat(arr[i].param[j].param_value))
+              usedparams[l].textContent = usedparams[l].getAttribute('name') + " : " + usedparams[l].getAttribute('value');
+              find_param=1;
             }
-        }
+          }
+          if (find_param==0)
+          {
+            const rootDiv = document.getElementsByClassName("param_text");
+            const elementDiv = document.createElement("div");
+            elementDiv.setAttribute("id",'param_'+arr[i].param[j].param_id);
+            elementDiv.setAttribute("plain_id",arr[i].param[j].param_id);
+            elementDiv.setAttribute("name",arr[i].param[j].param_name);
+            elementDiv.setAttribute("value",arr[i].param[j].param_value);
+            elementDiv.textContent = arr[i].param[j].param_name+" : "+arr[i].param[j].param_value;
+            elementDiv.classList.add('param_text');
+            rootDiv[0].appendChild(elementDiv);
+          }
       }
     }
+  }
+}
+
+function decreaseCharacteristics(id)
+{
+  const value = JSON.parse(document.getElementById('hello-data').textContent);
+  arr = JSON.parse(value);
+  for (var i = 0; i < arr.length; i++)
+  {
+    if (arr[i].id==id)
+    {
+      for (var j = 0; j < arr[i].param.length; j++)
+      {
+        usedparams=document.getElementsByClassName("param_text");
+        for (var l = 0; l < usedparams.length; l++)
+          {
+            if (arr[i].param[j].param_id==usedparams[l].getAttribute('plain_id'))
+            {
+              usedparams[l].setAttribute("value", parseFloat(usedparams[l].getAttribute('value'))-parseFloat(arr[i].param[j].param_value))
+              usedparams[l].textContent = usedparams[l].getAttribute('name') + " : " + usedparams[l].getAttribute('value');
+              if(usedparams[l].getAttribute('value')==0)
+              {
+                usedparams[l].remove();
+              }
+            }
+          }
+      }
+    }
+  }
+}
+
+window.onload = createStartPosition();
+
+function createStartPosition()
+{
+  var divs = document.getElementsByClassName("yach essential");
+  for (var i = 0; i < divs.length; i++)
+  {
+    yach = document.getElementsByClassName("yach1 "+divs[i].getAttribute("name"));
+    yach[0].setAttribute("isactive",'true');
+    var divs1 = document.getElementsByClassName("yach1 extra_components "+divs[i].getAttribute("name"));
+    divs1[0].setAttribute("style","border: 2px solid #5fe46a;");
+    addChaarcteristics(parseInt(yach[0].getAttribute("plain_id")));
+    var price = parseFloat(document.getElementById("itogvalue").getAttribute('value'));
+    var addprice =  (Number(yach[0].getAttribute('value')));
+    document.getElementById("itogvalue").setAttribute('value',price+addprice);
+    var itog = document.getElementById("itogvalue").getAttribute('value');
+    val1 = parseFloat(itog);
+    document.getElementById("itogvalue").textContent="Итоговая стоимость: "+val1+" ₽";
   }
 }

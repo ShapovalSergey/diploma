@@ -3,6 +3,11 @@ function gotoFreeConstructor(id)
     document.location.href+="/free_"+id;
 }
 
+function gotoConstructCake(id)
+{
+    document.location.href+="/constructor_"+id;
+}
+
 $(document).ready(function() {
     $('#wrapper1').on('scroll', function() {
       $('#wrapper2').scrollLeft($(this).scrollLeft());

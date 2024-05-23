@@ -11,11 +11,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Inter:wght@400;700&family=Montserrat:wght@700&family=Noto+Sans:wght@700&family=Poppins:wght@700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>
+{{ ci_param_info|json_script:"hello-data" }}
 </head>
 <body style='overflow-x:hidden; margin:0%'>
     <input type="hidden" class="id" value="{{id}}" id="id">
     <div class="main">
-        <div class="free_constructor_button" onclick="gobacktoConstructor()" style="z-index: 100;"><div class="free_constructor_text">Назад</div></div>
+        <div class="cake_constructor_button" onclick="gobacktoConstructor()" style="z-index: 100;"><div class="cake_constructor_text">Назад</div></div>
         <div class="add_cake_back">
             <div class="add_cake_window" id="popup">
                 <div class="close_popup_button" onclick="closePopup()"><img src="{% static "images/close-button.png"%}"></div>
@@ -35,7 +36,7 @@
         <div class="param_text"></div>
     </div>
 </div>
-        <div class="firstpage" id="spage">
+        <div class="firstpagecake" id="spage">
             <div class="secondtitle" id="sectitle">
                 Конструктор
             </div>
@@ -66,12 +67,20 @@
                 {% for i in ing %} 
                 {% for cica in ci_count_array %} 
                 {% if i.id == cica.id %}
+                {% if i.IsEssential == True %}
+                <div class="yach essential" style="visibility:hidden;grid-template-rows: repeat({{cica.count}}, 160px);" id="yach{{i.id}}" name="{{i.name}}">
+                {% else %}
                 <div class="yach" style="visibility:hidden;grid-template-rows: repeat({{cica.count}}, 160px);" id="yach{{i.id}}">
+                {% endif %} 
                 {% endif %}   
                 {% endfor %}  
                     {% for c in ci %} 
                     {% if i.id == c.Id_ing_id %}
-                    <div class="yach1" name="{{c.name}}" id="yach1_{{c.id}}" style="position: relative;" value="{{c.Value}}" count="0"> <div class="yach1 extra_components"><img class="image" src="{% static ""%}images/concingridients/{{c.image}}" style="border-radius: 100px;"><div class="CIname">{{c.name}}</div><div class="CIname" style="margin-left: -30px;min-width: 160px;text-align: center;">({{c.Value}} рублей)</div> <div class="yach1 smallbuttonadd" id="smbutadd_{{c.id}}" onclick="addConcIng({{c.id}},'{{c.image_ready}}')"><img src="{% static "images/sm-add-circle.png"%}" ></div><div class="yach1 smallbuttondelete"id="smbutdelete_{{c.name}}"onclick="reduceConcIng({{c.id}},'{{c.name}}')"><img src="{% static "images/sm-remove-circle.png"%}" ></div></div></div>
+                    {% if i.IsEssential == True %}
+                    <div class="yach1 {{i.name}}" name="{{c.name}}" id="yach1_{{c.id}}" style="position: relative;" value="{{c.Value}}" count="0" isActive="false" plain_id="{{c.id}}"> <div class="yach1 extra_components {{i.name}}"><img class="image" src="{% static ""%}images/concingridients/{{c.image}}" style="border-radius: 100px; cursor:pointer;" onclick="changeEssential({{c.id}})"><div class="CIname">{{c.name}}</div><div class="CIname" style="margin-left: -30px;min-width: 160px;text-align: center;">({{c.Value}} рублей)</div></div></div>
+                    {% else %}
+                    <div class="yach1" name="{{c.name}}" id="yach1_{{c.id}}" style="position: relative;" value="{{c.Value}}" count="0" isActive="false" plain_id="{{c.id}}"> <div class="yach1 extra_components {{i.name}}"><img class="image" src="{% static ""%}images/concingridients/{{c.image}}" style="border-radius: 100px; cursor:pointer;" onclick="changeNonEssential({{c.id}})"><div class="CIname">{{c.name}}</div><div class="CIname" style="margin-left: -30px;min-width: 160px;text-align: center;">({{c.Value}} рублей)</div></div></div>
+                    {% endif %} 
                     {% endif %}   
                     {% endfor %}  
                 </div> 
@@ -81,8 +90,8 @@
             </div>
             {% csrf_token %}
             <div class="buttonsecondorder" onclick="showPopup()" style="cursor: pointer; visibility:visible" id="butsecord">
-            <div class="secondordertext">
-                Создать блюдо 
+            <div class="secondordertext" style="color:#794f4f;">
+                Создать блюдо
             </div></div>
             <div class="itogoname" id="itogvalue" style="text-align:center; margin-top: -1%;margin-left: 65%; font-size: 27px;" value="0">Итоговая стоимость: 0 ₽</div>  
         </div>
@@ -90,6 +99,5 @@
     <script src="{% static "js/main.js"%}"></script>
     <script src="{% static "js/constructor.js"%}"></script>
     <script src="{% static "js/custom_script.js"%}"></script>
-    {{ ci_param_info|json_script:"hello-data" }}
 </body>
 </html>

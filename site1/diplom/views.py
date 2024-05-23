@@ -161,6 +161,30 @@ def gotofreeconstructor(request,dish_id):
 
     return render(request, "free_constructor.html", {"ing": ing, "ci":ci,"ci_count_array":ci_count_array,"ci_param_info":json.dumps(ci_param_info,ensure_ascii=False),"id":dish_id}) 
 
+def gotoconstructcake(request,cake_id):
+    ingct = IngCT.objects.filter(Id_cake_type=CakeType.objects.get(id=cake_id))
+    id_ing=[]
+    for i in ingct:
+        id_ing.append(i.Id_ing.id)
+    ing=Ingredients.objects.filter(id__in=id_ing)
+    ci = ConcreateIngredients.objects.all()
+    ci_count_array=[]
+    ci_param_info=[]
+    for i in ing:
+        ci_count_array.append({"id":i.id,"count":ConcreateIngredients.objects.filter(Id_ing=i).count()})
+    for c in ci:
+        if IngCT.objects.filter(Id_cake_type=CakeType.objects.get(id=cake_id),Id_ing=c.Id_ing).count()>0:
+            id=c.id 
+            param_info=[]
+            params=CIChar.objects.filter(Id_conc_ing=c)
+            for p in params:
+                param_id=p.Id_char.id 
+                param_name=p.Id_char.name
+                param_value=p.Value
+                param_info.append({"param_id":param_id,"param_name":param_name,"param_value":param_value})
+            ci_param_info.append({"id":id,"param":param_info})
+
+    return render(request, "cake_constructor.html", {"ing": ing, "ci":ci,"ci_count_array":ci_count_array,"ci_param_info":json.dumps(ci_param_info,ensure_ascii=False),"id":cake_id}) 
 
 
 

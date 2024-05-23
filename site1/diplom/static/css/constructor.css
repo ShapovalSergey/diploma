@@ -29,15 +29,16 @@ body::-webkit-scrollbar
     
 }
 
-.screen1 
+.firstpagecake
 {
-    margin-left: auto;
-    margin-right: 0em;
-    width: 627px;
-    height: 1095px;
-    flex-shrink: 0;
-    background: linear-gradient(180deg, #4E1919 0%, #A80000 100%);
+    top:0%;
+    position:absolute;
+    min-width: 100%;
+    min-height: 100%;
+    background: linear-gradient( #ff9e9e, #794f4f);
+    
 }
+
 
 .MSImage
 {
@@ -384,7 +385,7 @@ body::-webkit-scrollbar
     height: 100px;
     flex-shrink: 0;
     border-radius: 100px;
-    border: 2px solid #FFF;
+    border: 2px solid #ffffff;
 }
 
 .buttonsecondorder
@@ -687,6 +688,39 @@ body::-webkit-scrollbar
 
 
 
+  .cake_constructor_button
+  {   
+    position: absolute;
+      left:-10px;
+      top:0%;
+      margin-top: 35px;
+      display: grid;
+      border-radius: 10px;
+      cursor:pointer;
+      width: 200px;
+      height: 40px;
+      flex-shrink: 0;
+      background: #ffa1a1;
+      box-shadow: 0px 4px 4px 0px #000;
+      border: 4px solid #ffffff;
+  }
+
+  .cake_constructor_text
+  {
+      width: 200px;
+      height: 40px;
+      display: flex;
+      align-items:center;
+      justify-content:center;
+      text-align: center;
+      vertical-align: middle;
+      color: #ffffff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 28px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+  }
 
 
 
