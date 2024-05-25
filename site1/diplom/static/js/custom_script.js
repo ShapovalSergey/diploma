@@ -231,8 +231,28 @@ function decreaseCharacteristics(id)
 
 window.onload = createStartPosition();
 
+function createFullElementsInside(id,value,name,img) 
+{
+  const rootDiv = document.getElementsByClassName("fishka_additional");
+  const elementDiv = document.createElement("div");
+  
+
+  elementDiv.setAttribute("id","ing_image_"+id);
+  plain_id = img.split(/[_.]/)[1];
+  elementDiv.setAttribute("plain_id",plain_id);
+  elementDiv.setAttribute("value",value);
+  elementDiv.setAttribute("name",name);
+  elementDiv.style.cssText+='background-image:url(http://127.0.0.1:8000/static/images/ingready/'+img+');background-repeat: no-repeat;background-position: center;opacity: 0;animation: ani 1s forwards;';
+  elementDiv.classList.add('newfullElement');
+  rootDiv[0].appendChild(elementDiv);
+}
+
+
+
+
 function createStartPosition()
 {
+  const rootDiv = document.getElementsByClassName("ing_text");
   var divs = document.getElementsByClassName("yach essential");
   for (var i = 0; i < divs.length; i++)
   {
@@ -240,12 +260,172 @@ function createStartPosition()
     yach[0].setAttribute("isactive",'true');
     var divs1 = document.getElementsByClassName("yach1 extra_components "+divs[i].getAttribute("name"));
     divs1[0].setAttribute("style","border: 2px solid #5fe46a;");
-    addChaarcteristics(parseInt(yach[0].getAttribute("plain_id")));
+    var plain_id = parseInt(yach[0].getAttribute("plain_id"));
+    var name = yach[0].getAttribute("name");
+    addChaarcteristics(plain_id);
     var price = parseFloat(document.getElementById("itogvalue").getAttribute('value'));
     var addprice =  (Number(yach[0].getAttribute('value')));
     document.getElementById("itogvalue").setAttribute('value',price+addprice);
     var itog = document.getElementById("itogvalue").getAttribute('value');
     val1 = parseFloat(itog);
     document.getElementById("itogvalue").textContent="Итоговая стоимость: "+val1+" ₽";
+    const value = JSON.parse(document.getElementById('hello-data').textContent);
+    arr = JSON.parse(value);
+    for (var j = 0; j < arr.length; j++)
+    {
+      if (arr[j].id==plain_id)
+      {
+        var kar = arr[j].img;
+        const elementDiv = document.createElement("div");
+        elementDiv.setAttribute("id",'ing_'+arr[j].ingid);
+        elementDiv.setAttribute("plain_id",arr[j].id);
+        elementDiv.setAttribute("name",arr[j].name);
+        elementDiv.textContent = arr[j].ingname+" : "+arr[j].name;
+        elementDiv.classList.add('param_text');
+        rootDiv[0].appendChild(elementDiv);
+        createFullElementsInside(arr[j].ingname,addprice,name,kar);
+      }
+    }
+  }
+  const title = document.createElement("div");
+  title.classList.add('param_block_title');
+  title.setAttribute("style","margin-left:-25px;position:relative;margin-top:10px;")
+  title.textContent="Дополнительно:";
+  rootDiv[0].appendChild(title);
+}
+
+function changeIngInfo(id)
+{
+  const value = JSON.parse(document.getElementById('hello-data').textContent);
+  arr = JSON.parse(value);
+  for (var i = 0; i < arr.length; i++)
+    {
+      if (arr[i].id==id)
+      {
+        var kar = arr[i].img;
+        document.getElementById("ing_"+arr[i].ingid).textContent = arr[i].ingname+" : "+arr[i].name;
+        document.getElementById("ing_image_"+arr[i].ingname).setAttribute("style",'background-image:url(http://127.0.0.1:8000/static/images/ingready/'+arr[i].img+');background-repeat: no-repeat;background-position: center;opacity: 0;animation: ani 1s forwards;');
+      }
+    }
+}
+
+function changeEssential(id)
+{
+  const elem = document.getElementById("yach1_"+id);
+  isActive = elem.getAttribute("isactive");
+  if(isActive=='false')
+  {
+    var className = elem.className;
+    divs = document.getElementsByClassName(className);
+    for (var i = 0; i < divs.length; i++)
+    {
+      if (divs[i].getAttribute("isactive")=='true')
+      {
+        divs[i].setAttribute("isactive",'false');
+        var plain_id = parseInt(divs[i].getAttribute("plain_id"));
+        document.getElementById("extra_components_"+plain_id).setAttribute("style","border: 2px solid #fff;");
+        decreaseCharacteristics(plain_id);
+        var price = parseFloat(document.getElementById("itogvalue").getAttribute('value'));
+        var addprice =  (Number(divs[i].getAttribute('value')));
+        document.getElementById("itogvalue").setAttribute('value',price-addprice);
+        var itog = document.getElementById("itogvalue").getAttribute('value');
+        val1 = parseFloat(itog);
+        document.getElementById("itogvalue").textContent="Итоговая стоимость: "+val1+" ₽";
+      }
+    }
+    elem.setAttribute("isactive",'true');
+    document.getElementById("extra_components_"+elem.getAttribute("plain_id")).setAttribute("style","border: 2px solid #5fe46a;");
+    addChaarcteristics(elem.getAttribute("plain_id"));
+    var price = parseFloat(document.getElementById("itogvalue").getAttribute('value'));
+    var addprice =  (Number(elem.getAttribute('value')));
+    document.getElementById("itogvalue").setAttribute('value',price+addprice);
+    var itog = document.getElementById("itogvalue").getAttribute('value');
+    val1 = parseFloat(itog);
+    document.getElementById("itogvalue").textContent="Итоговая стоимость: "+val1+" ₽";
+    changeIngInfo(elem.getAttribute("plain_id"));
+  }
+}
+
+
+
+function changeNonEssential(id)
+{
+  const rootDiv = document.getElementsByClassName("ing_text");
+  const elem = document.getElementById("yach1_"+id);
+  isActive = elem.getAttribute("isactive");
+  const value = JSON.parse(document.getElementById('hello-data').textContent);
+  arr = JSON.parse(value);
+  for (var j = 0; j < arr.length; j++)
+  {
+    if (arr[j].id==elem.getAttribute("plain_id"))
+    {
+      var number = j;
+    }
+  }
+  const ingname=arr[number].ingname;
+  const img = arr[number].img;
+  const ingid = arr[number].ingid;
+  if(isActive=='false')
+  {
+    var counter=0;
+    var className = elem.className;
+    divs = document.getElementsByClassName(className);
+    for (var i = 0; i < divs.length; i++)
+    {
+      if (divs[i].getAttribute("isactive")=='true')
+      {
+        divs[i].setAttribute("isactive",'false');
+        var plain_id = parseInt(divs[i].getAttribute("plain_id"));
+        document.getElementById("extra_components_"+plain_id).setAttribute("style","border: 2px solid #fff;");
+        decreaseCharacteristics(plain_id);
+        var price = parseFloat(document.getElementById("itogvalue").getAttribute('value'));
+        var addprice =  (Number(divs[i].getAttribute('value')));
+        document.getElementById("itogvalue").setAttribute('value',price-addprice);
+        var itog = document.getElementById("itogvalue").getAttribute('value');
+        val1 = parseFloat(itog);
+        document.getElementById("itogvalue").textContent="Итоговая стоимость: "+val1+" ₽";
+        counter++;
+      }
+    }
+    if (counter==0)
+    {
+      const elementDiv = document.createElement("div");
+      elementDiv.setAttribute("id",'ing_'+arr[number].ingid);
+      elementDiv.setAttribute("plain_id",arr[number].id);
+      elementDiv.setAttribute("name",arr[number].name);
+      elementDiv.textContent = arr[number].ingname+" : "+arr[number].name;
+      elementDiv.classList.add('ing_text');
+      rootDiv[0].appendChild(elementDiv);
+    }
+    else 
+    {
+      document.getElementById("ing_"+ingid).textContent=arr[number].ingname+" : "+arr[number].name;
+      document.getElementById("ing_image_"+ingname).remove();
+    }
+    createFullElementsInside(ingname,elem.getAttribute('value'),elem.getAttribute('name'),img);
+    elem.setAttribute("isactive",'true');
+    document.getElementById("extra_components_"+elem.getAttribute("plain_id")).setAttribute("style","border: 2px solid #5fe46a;");
+    addChaarcteristics(elem.getAttribute("plain_id"));
+    var price = parseFloat(document.getElementById("itogvalue").getAttribute('value'));
+    var addprice =  (Number(elem.getAttribute('value')));
+    document.getElementById("itogvalue").setAttribute('value',price+addprice);
+    var itog = document.getElementById("itogvalue").getAttribute('value');
+    val1 = parseFloat(itog);
+    document.getElementById("itogvalue").textContent="Итоговая стоимость: "+val1+" ₽";
+    changeIngInfo(elem.getAttribute("plain_id"));
+  }
+  else
+  {
+    elem.setAttribute("isactive",'false');
+    elem.setAttribute("style","border: 2px solid #fff;");
+    decreaseCharacteristics(elem.getAttribute("plain_id"));
+    var price = parseFloat(document.getElementById("itogvalue").getAttribute('value'));
+    var addprice =  (Number(elem.getAttribute('value')));
+    document.getElementById("itogvalue").setAttribute('value',price-addprice);
+    var itog = document.getElementById("itogvalue").getAttribute('value');
+    val1 = parseFloat(itog);
+    document.getElementById("itogvalue").textContent="Итоговая стоимость: "+val1+" ₽";
+    document.getElementById("ing_"+ingid).remove();
+    document.getElementById("ing_image_"+ingname).remove();
   }
 }

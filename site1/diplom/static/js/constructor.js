@@ -34,6 +34,15 @@ function showPopup()
     p.style.transform=`translateY(70%)`
   }
 }
+
+function showCakePopup()
+{
+    document.getElementsByClassName("add_cake_back")[0].setAttribute("style",'display:block');
+    document.getElementsByClassName("add_cake_window")[0].setAttribute("style",'display:block');
+    const p = document.getElementById("popup");
+    p.style.transform=`translateY(70%)`
+}
+
 function closePopup()
 {
     document.getElementsByClassName("add_cake_back")[0].setAttribute("style",'display:none');
@@ -96,8 +105,7 @@ function savenewCake()
         }
         var el = document.getElementsByName("csrfmiddlewaretoken");
         csrf_value = el[0].getAttribute("value");
-        ing = document.getElementsByClassName("newElement");
-        var sum=75;
+        var sum=0;
         let names = [];
         let values = [];
         let locations = [];
@@ -129,6 +137,72 @@ function savenewCake()
           conc_ing[i].style.visibility='hidden';
         }
         setTimeout('gobacktoConstructor()',3000);
+      }
+    },
+    error: (error) => {
+        console.log(error);
+    }
+});
+}
+}
+
+function savenewConcreteCake(id)
+{
+  var name = document.getElementById("cake_name").value;
+  alert(name)
+  if (name=='')
+    alert("Не введено название блюда");
+  else
+  {
+    dish_id = document.getElementById("dish_id").value;
+  $.ajax({
+    url: "/check-dish-name/",
+    type: "GET",
+    dataType: "json",
+    async: false,
+    data:{
+        'name':name,
+        'id':dish_id
+      },
+    success: (data) => {
+      var check=data['check'];
+      if (check==0)
+      alert("Данное имя уже используется, пожалуйста, выберите другое");
+      else
+      {
+        ing = document.getElementsByClassName("newfullElement");
+        var el = document.getElementsByName("csrfmiddlewaretoken");
+        csrf_value = el[0].getAttribute("value");
+        var sum=0;
+        let names = [];
+        let values = [];
+        let ids = [];
+        for (var i = 0; i < ing.length; i++)
+        {
+          sum+=Number(ing[i].getAttribute("value"));
+          names.push(ing[i].getAttribute("name"));
+          values.push(Number(ing[i].getAttribute("value")));
+          ids.push(Number(ing[i].getAttribute("plain_id")));
+        }
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        const requestObject = new XMLHttpRequest();
+        requestObject.open("POST", '/savenewconcretedish/');
+        requestObject.setRequestHeader("X-CSRFToken", csrftoken)
+        const data = new FormData();
+        data.append('names', names);
+        data.append('name', name);
+        data.append('value',values);
+        data.append('sum',sum);
+        data.append('ids',ids);
+        data.append('id',id);
+        requestObject.send(data);
+        closePopup();
+        var conc_ing = document.getElementsByClassName("yach");
+        for (var i = 0; i < conc_ing.length; i++) 
+        {
+          conc_ing[i].style.visibility='hidden';
+        }
+        gobacktoConstructor();
       }
     },
     error: (error) => {

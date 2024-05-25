@@ -360,6 +360,17 @@ body::-webkit-scrollbar
     background-color:#00000000;
 }
 
+.newfullElement
+{
+    opacity: 1;
+    z-index: 5;
+    position:absolute;
+    vertical-align: bottom;
+    width: 500px;
+    height: 500px;
+    background-color:#00000000;
+}
+
 .image
 {
     object-fit: fill; 
@@ -902,7 +913,20 @@ body::-webkit-scrollbar
   word-break: break-all;
 }
 
-
+.ing_text
+{
+  position:relative;
+  width: 300px;
+  height: 34.5px;
+  text-align: left;
+  color: #FFF;
+  font-family: 'Amatic SC',sans-serif ;
+  font-size: 34px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  word-break: break-all;
+}
 
 .add_cake_back {
   display: none;

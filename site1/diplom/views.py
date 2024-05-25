@@ -177,12 +177,16 @@ def gotoconstructcake(request,cake_id):
             id=c.id 
             param_info=[]
             params=CIChar.objects.filter(Id_conc_ing=c)
+            img = c.image_ready
+            ingname = c.Id_ing.name
+            name = c.name
+            ingid = c.Id_ing.id
             for p in params:
                 param_id=p.Id_char.id 
                 param_name=p.Id_char.name
                 param_value=p.Value
                 param_info.append({"param_id":param_id,"param_name":param_name,"param_value":param_value})
-            ci_param_info.append({"id":id,"param":param_info})
+            ci_param_info.append({"id":id,"param":param_info,"img":img,"ingname":ingname,"name":name,"ingid":ingid})
 
     return render(request, "cake_constructor.html", {"ing": ing, "ci":ci,"ci_count_array":ci_count_array,"ci_param_info":json.dumps(ci_param_info,ensure_ascii=False),"id":cake_id}) 
 
@@ -243,8 +247,8 @@ def check_dish_name(request):
     is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
     if is_ajax:
         if request.method == 'GET':
-            name = request.FILES.get('name')
-            id = request.POST.get("id") 
+            name = request.GET.get("name")
+            id = request.GET.get("id") 
             dishes = Dish.objects.filter(name=name)
             if id=='new':
                 check=True
@@ -374,6 +378,19 @@ def savenewdish(request):
     ids=str(newdict['ids']).split(",")
     for index,i in enumerate(ids):
         new_zap = DishIng(Id_conc_ing=ConcreateIngredients.objects.get(id=int(ids[index])),Id_dish=new_dish,Location=int(location[index]))
+        new_zap.save()
+    return HttpResponse("POST request")
+
+@csrf_exempt      
+def savenewconcretedish(request):
+    newdict = request.POST.dict()
+    name=newdict['name']
+    id=newdict['id']
+    new_dish = Dish(name=name,Id_cake_type=CakeType.objects.get(id=id))
+    new_dish.save()
+    ids=str(newdict['ids']).split(",")
+    for index,i in enumerate(ids):
+        new_zap = DishIng(Id_conc_ing=ConcreateIngredients.objects.get(id=int(ids[index])),Id_dish=new_dish,Location=0)
         new_zap.save()
     return HttpResponse("POST request")
 

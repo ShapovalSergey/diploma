@@ -41,6 +41,7 @@ urlpatterns = [
     path('saveingfile/', views.saveingfile, name="saveingfile"),
     path('saveconcingfile/', views.saveconcingfile, name="saveconcingfile"),
     path('savenewdish/', views.savenewdish, name="savenewdish"),
+    path('savenewconcretedish/', views.savenewconcretedish, name="savenewconcretedish"),
     path('deletefile/', views.deletefile, name="deletefile"),
     path('deleteingfile/', views.deleteingfile, name="deleteingfile"),
     path('deleteconcingfile/', views.deleteconcingfile, name="deleteconcingfile"),
