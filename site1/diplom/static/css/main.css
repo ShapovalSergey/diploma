@@ -182,6 +182,20 @@ body {
     vertical-align: middle;
 }
 
+.orders_param
+{
+    position:relative;
+    margin-bottom:10px;
+    display: grid;
+    grid-template-columns: repeat(2, 25%);
+    position: relative;
+    min-width:50vw;
+    align-items:center;
+    justify-content:center;
+    text-align: center;
+    vertical-align: middle;
+}
+
 .closebtn 
 {
     cursor: pointer;
@@ -199,6 +213,18 @@ body {
     border-radius: 5px;
     cursor:pointer;
     width: 400px;
+    height: 40px;
+    flex-shrink: 0;
+    background: #ffa1a1;
+}
+
+.add_archieve_button
+{
+    position: relative;
+    top:85%;
+    border-radius: 5px;
+    cursor:pointer;
+    width: 350px;
     height: 40px;
     flex-shrink: 0;
     background: #ffa1a1;
@@ -494,6 +520,18 @@ body {
     vertical-align: middle;
 }
 
+.ing_info_field_half_row
+{
+
+    width: 500px;
+    height: 40px;
+    display: flex;
+    align-items:center;
+    justify-content:center;
+    text-align: center;
+    vertical-align: middle;
+}
+
 .ing_info_field_chars_cakes
 {
 
@@ -502,6 +540,38 @@ body {
     display: flex;
     align-items:end;
     vertical-align: bottom;
+}
+
+.order_dish_info_field
+{
+
+    width: 1000px;
+    height: 592px;
+    display: flex;
+    align-items:end;
+    vertical-align: bottom;
+}
+
+.order_info_field
+{
+
+    width: 500px;
+    height: 592px;
+    display: grid;
+    overflow-y: scroll;
+    align-content: flex-start;
+    justify-items: center;
+}
+
+.dish_info_field
+{
+
+    width: 500px;
+    height: 592px;
+    display: grid;
+    overflow-y: scroll;
+    align-content: flex-start;
+    justify-items: center;
 }
 
 .ing_info_field_c
@@ -545,6 +615,19 @@ body {
     cursor:pointer;
 }
 
+.order_field_row
+{
+    width: 400px;
+    height: 60px;
+    margin-bottom: 10px;
+    display: flex;
+    vertical-align: middle;
+    border: 2px solid #be1414;
+    border-radius: 5px;
+    cursor:pointer;
+
+}
+
 .cake_field_row
 {
     width: 350px;
@@ -555,6 +638,17 @@ body {
     display: flex;
     vertical-align: middle;
     cursor:pointer;
+}
+
+.dish_field_row
+{
+    width: 400px;
+    height: 60px;
+    margin-bottom: 10px;
+    border: 2px solid #be1414;
+    border-radius: 5px;
+    display: flex;
+    vertical-align: middle;
 }
 
 .param_text
@@ -572,6 +666,52 @@ body {
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+}
+
+.order_text
+{
+    position:relative;
+    width: 200px;
+    height: 60px;
+    margin-left: 5px;
+    display: flex;
+    align-items:center;
+    text-align: left;
+    vertical-align: middle;
+    color: #be1414;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.change_delete_block
+{
+    width: 150px;
+    height: 60px;
+    display: grid;
+    align-content: flex-start;
+}
+
+.change_delete_text
+{
+    position:relative;
+    width: 150px;
+    height: 30px;
+    display: flex;
+    align-items:center;
+    text-align: center;
+    justify-content: center;
+    vertical-align: middle;
+    color: #be1414;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 .input_field

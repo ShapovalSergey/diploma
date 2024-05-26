@@ -11,20 +11,37 @@
 <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Inter:wght@400;700&family=Montserrat:wght@700&family=Noto+Sans:wght@700&family=Poppins:wght@700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>
+{{ ci_param_info|json_script:"hello-data" }}
 </head>
 <body style='overflow-x:hidden; margin:0%'>
     <input type="hidden" class="id" value="{{id}}" id="id">
+    <input type="hidden" class="id" value="free" id="type">
     <div class="main">
-        <div class="free_constructor_button" onclick="gobacktoConstructor()" style="z-index: 100;"><div class="free_constructor_text">Назад</div></div>
+        {% if id == 'new' %}
+        <div class="free_constructor_button" onclick="gobacktoConstructor()" style="z-index: 100;">
+            {% else %}
+            <div class="free_constructor_button" onclick="gobacktoOrders()" style="z-index: 100;">
+            {% endif %} 
+            <div class="free_constructor_text">Назад</div></div>
         <div class="add_cake_back">
             <div class="add_cake_window" id="popup">
                 <div class="close_popup_button" onclick="closePopup()"><img src="{% static "images/close-button.png"%}"></div>
+                {% if id == 'new' %}
                 <div class="popup_row" style="top:50%;"><input class="inp1" placeholder="Название" type="text" id="cake_name" style="min-width: 20vw; text-align: center;"></input></div>
+                {% else %}
+                <div class="popup_row" style="top:50%;"><input class="inp1" placeholder="Название" type="text" id="cake_name" style="min-width: 20vw; text-align: center;" value="{{name}}" oldname="{{name}}"></input></div>
+                {% endif %} 
                 <div class="popup_row" style="top:35%;"><div class="popup_text">Введите информацию для создания нового блюда</div></div>
                 <div class="popup_row" style="top:85%;">
+                    {% if id == 'new' %}
                 <div class="save_cake_button" onclick="savenewCake()" style="width: 200px;height: 40px; left:35%; top:85%; background:#be1414;">
                     <div class="save_button_text" style="width: 200px;height: 40px;">Сохранить</div>
                 </div>
+                {% else %}
+                <div class="save_cake_button" onclick="saveChangedCake({{id}})" style="width: 200px;height: 40px; left:35%; top:85%; background:#be1414;">
+                    <div class="save_button_text" style="width: 200px;height: 40px;">Сохранить</div>
+                </div>
+                {% endif %} 
                 </div>
             </div>
             </div>
@@ -71,7 +88,7 @@
                 {% endfor %}  
                     {% for c in ci %} 
                     {% if i.id == c.Id_ing_id %}
-                    <div class="yach1" name="{{c.name}}" id="yach1_{{c.id}}" style="position: relative;" value="{{c.Value}}" count="0"> <div class="yach1 extra_components"><img class="image" src="{% static ""%}images/concingridients/{{c.image}}" style="border-radius: 100px;"><div class="CIname">{{c.name}}</div><div class="CIname" style="margin-left: -30px;min-width: 160px;text-align: center;">({{c.Value}} рублей)</div> <div class="yach1 smallbuttonadd" id="smbutadd_{{c.id}}" onclick="addConcIng({{c.id}},'{{c.image_ready}}')"><img src="{% static "images/sm-add-circle.png"%}" ></div><div class="yach1 smallbuttondelete"id="smbutdelete_{{c.name}}"onclick="reduceConcIng({{c.id}},'{{c.name}}')"><img src="{% static "images/sm-remove-circle.png"%}" ></div></div></div>
+                    <div class="yach1" name="{{c.name}}" id="yach1_{{c.id}}" style="position: relative;" value="{{c.Value}}" count="0"> <div class="yach1 extra_components"><img class="image" src="{% static ""%}images/concingridients/{{c.image}}" style="border-radius: 100px;"><div class="CIname">{{c.name}}</div><div class="CIname" style="margin-left: -30px;min-width: 160px;text-align: center;background-color: rgb(187, 90, 90);">({{c.Value}} рублей)</div> <div class="yach1 smallbuttonadd" id="smbutadd_{{c.id}}" onclick="addConcIng({{c.id}},'{{c.image_ready}}')"><img src="{% static "images/sm-add-circle.png"%}" ></div><div class="yach1 smallbuttondelete"id="smbutdelete_{{c.name}}"onclick="reduceConcIng({{c.id}},'{{c.name}}')"><img src="{% static "images/sm-remove-circle.png"%}" ></div></div></div>
                     {% endif %}   
                     {% endfor %}  
                 </div> 
@@ -81,15 +98,22 @@
             </div>
             {% csrf_token %}
             <div class="buttonsecondorder" onclick="showPopup()" style="cursor: pointer; visibility:visible" id="butsecord">
-            <div class="secondordertext">
+                {% if id == 'new' %}
+                <div class="secondordertext">
                 Создать блюдо 
-            </div></div>
+                </div>
+                {% else %}
+                <div class="secondordertext">
+                Сохранить
+                </div>
+                {% endif %} 
+        </div>
+                
             <div class="itogoname" id="itogvalue" style="text-align:center; margin-top: -1%;margin-left: 65%; font-size: 27px;" value="0">Итоговая стоимость: 0 ₽</div>  
         </div>
     </div>
     <script src="{% static "js/main.js"%}"></script>
     <script src="{% static "js/constructor.js"%}"></script>
     <script src="{% static "js/custom_script.js"%}"></script>
-    {{ ci_param_info|json_script:"hello-data" }}
 </body>
 </html>

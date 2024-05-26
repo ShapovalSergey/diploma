@@ -82,12 +82,25 @@ class DishIng(models.Model):
         managed = True
         db_table = 'DishIng'
 
+class OrderStatus(models.Model):
+    name = models.TextField(max_length=60)
+    class Meta:
+        managed = True
+        db_table = 'OrderStatus'
+
 class Order(models.Model):
-    Id_dish=models.ForeignKey(Dish, on_delete=models.CASCADE)
     phone=models.TextField(max_length=12)
     customer_name=models.TextField(max_length=50)
     order_date=models.DateField()
-
+    status = models.ForeignKey(OrderStatus, on_delete=models.CASCADE)
     class Meta:
         managed = True
         db_table = 'Order'
+
+class OrderDish(models.Model):
+    Id_order=models.ForeignKey(Order, on_delete=models.CASCADE)
+    Id_dish=models.ForeignKey(Dish, on_delete=models.CASCADE)
+    Value=models.IntegerField()
+    class Meta:
+        managed = True
+        db_table = 'OrderDish'

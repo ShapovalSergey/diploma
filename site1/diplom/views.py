@@ -13,6 +13,7 @@ from .models import IngCT, CIChar
 from .models import CIChar
 from .models import CakeType
 from .models import Dish, DishIng
+from .models import Order,OrderStatus
 # Create your views here.
 
 def main(request):
@@ -28,7 +29,10 @@ def gotoconstructor(request):
     return render(request, "constructor.html",{"ct_info": ct_info,}) 
 
 def gotoorders(request):
-    return render(request, "orders.html") 
+    st = OrderStatus.objects.get(name="В работе")
+    orders = Order.objects.filter(status=st)
+    dishes = Dish.objects.all()
+    return render(request, "orders.html",{"orders": orders,"dishes":dishes}) 
 
 def gotocakes(request):
     cake_types=CakeType.objects.all()
@@ -145,6 +149,9 @@ def gotofreeconstructor(request,dish_id):
     ci = ConcreateIngredients.objects.all()
     ci_count_array=[]
     ci_param_info=[]
+    name=0
+    if dish_id!='new':
+        name = Dish.objects.get(id=dish_id).name
     for i in ing:
         ci_count_array.append({"id":i.id,"count":ConcreateIngredients.objects.filter(Id_ing=i).count()})
     for c in ci:
@@ -159,15 +166,26 @@ def gotofreeconstructor(request,dish_id):
                 param_info.append({"param_id":param_id,"param_name":param_name,"param_value":param_value})
             ci_param_info.append({"id":id,"param":param_info})
 
-    return render(request, "free_constructor.html", {"ing": ing, "ci":ci,"ci_count_array":ci_count_array,"ci_param_info":json.dumps(ci_param_info,ensure_ascii=False),"id":dish_id}) 
+    return render(request, "free_constructor.html", {"ing": ing, "ci":ci,"ci_count_array":ci_count_array,"ci_param_info":json.dumps(ci_param_info,ensure_ascii=False),"id":dish_id,"name":name}) 
 
-def gotoconstructcake(request,cake_id):
+def gotoconstructcake(request,cake_id,dish_id):
     ingct = IngCT.objects.filter(Id_cake_type=CakeType.objects.get(id=cake_id))
     id_ing=[]
     for i in ingct:
         id_ing.append(i.Id_ing.id)
     ing=Ingredients.objects.filter(id__in=id_ing)
     ci = ConcreateIngredients.objects.all()
+    dcing = []
+    ding=[]
+    dish_name=''
+    if dish_id !='new':
+        dishing = DishIng.objects.filter(Id_dish=Dish.objects.get(id=dish_id))
+        for d in dishing:
+            if d.Id_conc_ing.Id_ing.IsEssential==True:
+                ding.append({"id":d.Id_conc_ing.id,"ingname":d.Id_conc_ing.Id_ing.name})
+            else:
+                dcing.append({"id":d.Id_conc_ing.id})
+        dish_name=Dish.objects.get(id=dish_id).name
     ci_count_array=[]
     ci_param_info=[]
     for i in ing:
@@ -188,10 +206,23 @@ def gotoconstructcake(request,cake_id):
                 param_info.append({"param_id":param_id,"param_name":param_name,"param_value":param_value})
             ci_param_info.append({"id":id,"param":param_info,"img":img,"ingname":ingname,"name":name,"ingid":ingid})
 
-    return render(request, "cake_constructor.html", {"ing": ing, "ci":ci,"ci_count_array":ci_count_array,"ci_param_info":json.dumps(ci_param_info,ensure_ascii=False),"id":cake_id}) 
+    return render(request, "cake_constructor.html", {"ing": ing, "ci":ci,"ci_count_array":ci_count_array,"ci_param_info":json.dumps(ci_param_info,ensure_ascii=False),"id":cake_id, "dish_id":dish_id,"ding":json.dumps(ding),"name":dish_name,"dcing":json.dumps(dcing)}) 
 
 
-
+def get_dish(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        if request.method == 'GET':
+            id = request.GET.get('id')
+            elem=Dish.objects.get(id=id)
+            ding = DishIng.objects.filter(Id_dish=elem).order_by('Location')
+            name=elem.name
+            ingid = []
+            ingimages = []
+            for d in ding:
+                ingid.append(ConcreateIngredients.objects.only('id').get(name=d.Id_conc_ing.name).id)
+                ingimages.append(ConcreateIngredients.objects.only('image_ready').get(name=d.Id_conc_ing.name).image_ready)
+            return JsonResponse({'id':ingid,'images':ingimages,'name':name })
 
 def check_param(request):
     is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
@@ -372,8 +403,13 @@ def savefile(request):
 def savenewdish(request):
     newdict = request.POST.dict()
     name=newdict['name']
-    new_dish = Dish(name=name)
-    new_dish.save()
+    id=newdict['id']
+    if id == 'new':
+        new_dish = Dish(name=name)
+        new_dish.save()
+    else: 
+        new_dish = Dish.objects.get(id=id)
+        DishIng.objects.filter(Id_dish=new_dish).delete()
     location = str(newdict['locations']).split(",")
     ids=str(newdict['ids']).split(",")
     for index,i in enumerate(ids):
@@ -386,8 +422,13 @@ def savenewconcretedish(request):
     newdict = request.POST.dict()
     name=newdict['name']
     id=newdict['id']
-    new_dish = Dish(name=name,Id_cake_type=CakeType.objects.get(id=id))
-    new_dish.save()
+    cake_id=newdict['cake_id']
+    if id =='new':
+        new_dish = Dish(name=name,Id_cake_type=CakeType.objects.get(id=cake_id))
+        new_dish.save()
+    else:
+        new_dish = Dish.objects.get(id=id)
+        DishIng.objects.filter(Id_dish=new_dish).delete()
     ids=str(newdict['ids']).split(",")
     for index,i in enumerate(ids):
         new_zap = DishIng(Id_conc_ing=ConcreateIngredients.objects.get(id=int(ids[index])),Id_dish=new_dish,Location=0)
@@ -488,13 +529,15 @@ def saveconcingfile(request):
                 ing=ConcreateIngredients(name=name,Id_ing=Ingredients.objects.get(id=ing_id))
                 ing.Value=param_values[1]
                 ing.save()
-                ing.image='ing_'+str(ing.id)+'.'+img_name.split(".")[1]  
-                ing.image_ready='ing_'+str(ing.id)+'.'+vis_img_name.split(".")[1]  
+                ing.image='ing_'+str(ing.id)+'.'+img_name.split(".")[1] 
+                if ing.Id_ing.IsVisible==True: 
+                    ing.image_ready='ing_'+str(ing.id)+'.'+vis_img_name.split(".")[1]  
             else:
                 ing=ConcreateIngredients.objects.get(id=id)
                 ing.name=name
                 ing.image='ing_'+str(id)+"."+img_name.split(".")[1]
-                ing.image_ready='ing_'+str(ing.id)+'.'+vis_img_name.split(".")[1]  
+                if ing.Id_ing.IsVisible==True: 
+                    ing.image_ready='ing_'+str(ing.id)+'.'+vis_img_name.split(".")[1]  
                 ing.Value=param_values[1]
                 ingch=CIChar.objects.filter(Id_conc_ing=ing).delete()
             param_ids.pop(0)
@@ -505,7 +548,6 @@ def saveconcingfile(request):
                 newingchar=CIChar(Id_conc_ing=ing,Id_char=Characteristic.objects.get(id=p), Value=param_values[index])
                 newingchar.save()
             ing.save()
-            print(isVisibleFileChanged==False)
             if isFileChanged:
                 if str(uploaded_file)!="None":
                     path = default_storage.save('D:\games\diploma\site1\diplom\static\images\concingridients\ing_'+str(ing.id)+"."+ing.image.split(".")[1], ContentFile(uploaded_file.read()))
@@ -514,9 +556,10 @@ def saveconcingfile(request):
                 else:
                     path = default_storage.save('D:\games\diploma\site1\diplom\static\images\concingridients\ing_'+str(ing.id)+".png", file)
                     ing.image='ing_'+str(ing.id)+".png"
-            if isVisibleFileChanged:
-                path = default_storage.save('D:\games\diploma\site1\diplom\static\images\ingready\ing_'+str(ing.id)+"."+ing.image_ready.split(".")[1], ContentFile(uploaded_vis_file.read()))
-                uploaded_vis_file.close()                
+            if ing.Id_ing.IsVisible==True: 
+                if isVisibleFileChanged:
+                    path = default_storage.save('D:\games\diploma\site1\diplom\static\images\ingready\ing_'+str(ing.id)+"."+ing.image_ready.split(".")[1], ContentFile(uploaded_vis_file.read()))
+                    uploaded_vis_file.close()                
             file.close()
             return HttpResponse("POST request")  
 
@@ -557,6 +600,14 @@ def delete_ing(request):
             ing.delete()
             return HttpResponse("POST request")
     
+@csrf_exempt    
+def delete_dish(request):
+    if request.method == 'POST':
+            id = request.POST.get('id')
+            dish=Dish.objects.get(id=id)
+            dish.delete()
+            return HttpResponse("POST request")
+
 @csrf_exempt    
 def delete_conc_ing(request):
     if request.method == 'POST':

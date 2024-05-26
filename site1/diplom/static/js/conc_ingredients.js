@@ -140,8 +140,12 @@ function isFloat(n){
 
 function SaveConcIngredient(id)
 {
+  const isV = document.getElementById('isVisible').value;
   var image = document.getElementById("userFile").value;
-  var image_ready = document.getElementById("VisibleUserFile").value;
+  if(isV!='False')
+  {
+    var image_ready = document.getElementById("VisibleUserFile").value;
+  }
   var name=document.getElementById("input_"+id).value;
     if (name=="")
     {
@@ -189,13 +193,11 @@ function SaveConcIngredient(id)
         values.push(inps[i].value);
         ids.push(inps[i].getAttribute('plain_id'));
       }
-      
-      
-
-
-
       img_del=document.getElementById("userFile").getAttribute('oldImage');
+      if(isV!='False')
+      {
       vis_img_del=document.getElementById("VisibleUserFile").getAttribute('oldImage');
+      }
       old_name=document.getElementById("input_"+id).getAttribute('oldName');
       $.ajax({
           url: "/check-concing-name/",
@@ -240,33 +242,37 @@ function SaveConcIngredient(id)
                   else img_name="ing_"+id+"."+img_name;
                   file = document.getElementById("userFile").files[0];
                   /*Удаление отображаемой в конструкторе картинки*/
-                  vis_img_name = document.getElementById("VisibleUserFile").value;
-                  vis_img_name=vis_img_name.split('\\').pop();
                   isVisibleFileChanged=false;
-                  if((vis_img_del!=vis_img_name)&&(id!="new"))
+                  if(isV!='False')
                   {
-                      $.ajax({
-                          url: "/deleteconcingvisfile/",
-                          type: "POST",
-                          dataType: "json",
-                          async: false,
-                          data:{
-                          'img_del':vis_img_del,
-                          },
-                          success: (data) => {
-                              console.log(success);
-                          },
-                          error: (error) => {
-                              console.log(error);
-                          }
-                      });
-  
-                      isVisibleFileChanged=true;
+                    vis_img_name = document.getElementById("VisibleUserFile").value;
+                    vis_img_name=vis_img_name.split('\\').pop();
+                    isVisibleFileChanged=false;
+                    if((vis_img_del!=vis_img_name)&&(id!="new"))
+                    {
+                        $.ajax({
+                            url: "/deleteconcingvisfile/",
+                            type: "POST",
+                            dataType: "json",
+                            async: false,
+                            data:{
+                            'img_del':vis_img_del,
+                            },
+                            success: (data) => {
+                                console.log(success);
+                            },
+                            error: (error) => {
+                                console.log(error);
+                            }
+                        });
+    
+                        isVisibleFileChanged=true;
+                    }
+                    vis_img_name=vis_img_name.split('\\').pop().split('/').pop().split('.').pop();
+                    if (vis_img_name=="") vis_img_name="ing_"+id+".png";
+                    else vis_img_name="ing_"+id+"."+vis_img_name;
+                    file1 = document.getElementById("VisibleUserFile").files[0];
                   }
-                  vis_img_name=vis_img_name.split('\\').pop().split('/').pop().split('.').pop();
-                  if (vis_img_name=="") vis_img_name="ing_"+id+".png";
-                  else vis_img_name="ing_"+id+"."+vis_img_name;
-                  file1 = document.getElementById("VisibleUserFile").files[0];
                   /*Сохранение данных*/
                   if (id=="new") 
                   {
@@ -275,9 +281,12 @@ function SaveConcIngredient(id)
                   }
                   let formData = new FormData();
                   formData.append('photo', file);
-                  formData.append('visible_photo', file1);
                   formData.append('img_name', img_name);
-                  formData.append('vis_img_name', vis_img_name);
+                  if(isV!='False')
+                  {
+                    formData.append('visible_photo', file1);
+                    formData.append('vis_img_name', vis_img_name);
+                  }
                   formData.append('name', name);
                   formData.append('id', id);
                   formData.append('isFileChanged', isFileChanged);

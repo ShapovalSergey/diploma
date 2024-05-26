@@ -229,7 +229,119 @@ function decreaseCharacteristics(id)
   }
 }
 
-window.onload = createStartPosition();
+
+function editcake(id,images,name)
+{
+  document.getElementById("sectitle").textContent+="("+name+")";
+  for (var i = 0; i < id.length; i++)
+  {
+    addConcIng(id[i],images[i]);
+  }
+}
+
+function editDish(id)
+{
+  $.ajax({
+          url: "/getdish/",
+          type: "GET",
+          dataType: "json",
+          data:{
+              'id': id,
+          },
+          success: (data) => {
+              editcake(data['id'],data['images'],data['name']);
+          },
+          error: (error) => {
+              console.log(error);
+          }
+          });
+}
+
+
+
+
+
+
+if (document.getElementById('type').value=="cake")
+{
+  id = document.getElementById('dish_id').value;
+  if(id!='new')
+  {
+    window.onload = createStartCakePosition();
+  }
+  else
+  {
+    window.onload = createStartPosition();
+  }
+}
+else 
+{
+  id = document.getElementById('id').value;
+  if(id!='new')
+  {
+    editDish(id);
+  }
+}
+
+function createStartCakePosition()
+{
+  const rootDiv = document.getElementsByClassName("ing_text");
+  const ding = JSON.parse(document.getElementById('ding').textContent);
+  ding_arr = JSON.parse(ding);
+  const dcing = JSON.parse(document.getElementById('dcing').textContent);
+  dcing_arr = JSON.parse(dcing);
+  var k = 0;
+  const value = JSON.parse(document.getElementById('hello-data').textContent);
+  arr = JSON.parse(value);
+  for (var i = 0; i < ding_arr.length; i++)
+  {
+    yach = document.getElementsByClassName("yach1 "+ding_arr[i].ingname);
+    for (var j = 0; j < yach.length; j++)
+    {
+      if (yach[j].getAttribute('plain_id')==ding_arr[i].id) 
+      {
+        k=j;
+      }
+    }
+    yach[k].setAttribute("isactive",'true');
+    var divs1 = document.getElementsByClassName("yach1 extra_components "+ding_arr[i].ingname);
+    document.getElementById("extra_components_"+ding_arr[i].id).setAttribute("style","border: 2px solid #5fe46a;");
+    var plain_id = parseInt(yach[k].getAttribute("plain_id"));
+    var name = yach[k].getAttribute("name");
+    addChaarcteristics(plain_id);
+    var price = parseFloat(document.getElementById("itogvalue").getAttribute('value'));
+    var addprice =  (Number(yach[0].getAttribute('value')));
+    document.getElementById("itogvalue").setAttribute('value',price+addprice);
+    var itog = document.getElementById("itogvalue").getAttribute('value');
+    val1 = parseFloat(itog);
+    document.getElementById("itogvalue").textContent="Итоговая стоимость: "+val1+" ₽";
+    for (var j = 0; j < arr.length; j++)
+    {
+      if (arr[j].id==plain_id)
+      {
+        var kar = arr[j].img;
+        const elementDiv = document.createElement("div");
+        elementDiv.setAttribute("id",'ing_'+arr[j].ingid);
+        elementDiv.setAttribute("plain_id",arr[j].id);
+        elementDiv.setAttribute("name",arr[j].name);
+        elementDiv.textContent = arr[j].ingname+" : "+arr[j].name;
+        elementDiv.classList.add('param_text');
+        rootDiv[0].appendChild(elementDiv);
+        createFullElementsInside(arr[j].ingname,addprice,name,kar);
+      }
+    }
+  }
+  const title = document.createElement("div");
+  title.classList.add('param_block_title');
+  title.setAttribute("style","margin-left:-25px;position:relative;margin-top:10px;")
+  title.textContent="Дополнительно:";
+  rootDiv[0].appendChild(title);
+  for (var i = 0; i < dcing_arr.length; i++)
+  {
+    changeNonEssential(dcing_arr[i].id)
+  }
+  }
+
 
 function createFullElementsInside(id,value,name,img) 
 {
@@ -305,6 +417,7 @@ function changeIngInfo(id)
         var kar = arr[i].img;
         document.getElementById("ing_"+arr[i].ingid).textContent = arr[i].ingname+" : "+arr[i].name;
         document.getElementById("ing_image_"+arr[i].ingname).setAttribute("style",'background-image:url(http://127.0.0.1:8000/static/images/ingready/'+arr[i].img+');background-repeat: no-repeat;background-position: center;opacity: 0;animation: ani 1s forwards;');
+        document.getElementById("ing_image_"+arr[i].ingname).setAttribute("plain_id",id);
       }
     }
 }
@@ -417,7 +530,7 @@ function changeNonEssential(id)
   else
   {
     elem.setAttribute("isactive",'false');
-    elem.setAttribute("style","border: 2px solid #fff;");
+    document.getElementById("extra_components_"+elem.getAttribute('plain_id')).setAttribute("style","border: 2px solid #fff;");
     decreaseCharacteristics(elem.getAttribute("plain_id"));
     var price = parseFloat(document.getElementById("itogvalue").getAttribute('value'));
     var addprice =  (Number(elem.getAttribute('value')));

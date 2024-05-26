@@ -12,16 +12,27 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>
 {{ ci_param_info|json_script:"hello-data" }}
+{{ ding|json_script:"ding" }}
+{{ dcing|json_script:"dcing" }}
 </head>
 <body style='overflow-x:hidden; margin:0%'>
     <input type="hidden" class="id" value="{{id}}" id="id">
     <input type="hidden" class="id" value="{{dish_id}}" id="dish_id">
+    <input type="hidden" class="id" value="cake" id="type">
     <div class="main">
+        {% if dish_id == 'new' %}
         <div class="cake_constructor_button" onclick="gobacktoConstructor()" style="z-index: 100;"><div class="cake_constructor_text">Назад</div></div>
+        {% else %}
+        <div class="cake_constructor_button" onclick="gobacktoOrders()" style="z-index: 100;"><div class="cake_constructor_text">Назад</div></div>
+        {% endif %}
         <div class="add_cake_back">
             <div class="add_cake_window" id="popup">
                 <div class="close_popup_button" onclick="closePopup()"><img src="{% static "images/close-button.png"%}"></div>
+                {% if dish_id == 'new' %}
                 <div class="popup_row" style="top:50%;"><input class="inp1" placeholder="Название" type="text" id="cake_name" style="min-width: 20vw; text-align: center;"></input></div>
+                {% else %}
+                <div class="popup_row" style="top:50%;"><input class="inp1" placeholder="Название" type="text" id="cake_name" style="min-width: 20vw; text-align: center; " value="{{name}}" oldname="{{name}}"></input></div>
+                {% endif %}
                 <div class="popup_row" style="top:35%;"><div class="popup_text">Введите информацию для создания нового блюда</div></div>
                 <div class="popup_row" style="top:85%;">
                 <div class="save_cake_button" onclick="savenewConcreteCake({{id}})" style="width: 200px;height: 40px; left:35%; top:85%; background:#be1414;">
@@ -47,7 +58,7 @@
 
         <div class="firstpagecake" id="spage">
             <div class="secondtitle" id="sectitle">
-                Конструктор
+                Конструктор {{name}}
             </div>
             {% if ing.count > 11 %}
             <div class="wrapper" style="grid-template-columns: repeat({{ing.count}}, 130px);justify-content:start;" id="wrapper1">
@@ -86,9 +97,9 @@
                     {% for c in ci %} 
                     {% if i.id == c.Id_ing_id %}
                     {% if i.IsEssential == True %}
-                    <div class="yach1 {{i.name}}" name="{{c.name}}" id="yach1_{{c.id}}" style="position: relative;" value="{{c.Value}}" count="0" isActive="false" plain_id="{{c.id}}"> <div class="yach1 extra_components {{i.name}}" id="extra_components_{{c.id}}"><img class="image" src="{% static ""%}images/concingridients/{{c.image}}" style="border-radius: 100px; cursor:pointer;" onclick="changeEssential({{c.id}})"><div class="CIname">{{c.name}}</div><div class="CIname" style="margin-left: -30px;min-width: 160px;text-align: center;">({{c.Value}} рублей)</div></div></div>
+                    <div class="yach1 {{i.name}}" name="{{c.name}}" id="yach1_{{c.id}}" style="position: relative;" value="{{c.Value}}" count="0" isActive="false" plain_id="{{c.id}}"> <div class="yach1 extra_components {{i.name}}" id="extra_components_{{c.id}}"><img class="image" src="{% static ""%}images/concingridients/{{c.image}}" style="border-radius: 100px; cursor:pointer;" onclick="changeEssential({{c.id}})"><div class="CIname">{{c.name}}</div><div class="CIname" style="margin-left: -30px;min-width: 160px;text-align: center;background-color: grey;">({{c.Value}} рублей)</div></div></div>
                     {% else %}
-                    <div class="yach1 {{i.name}}" name="{{c.name}}" id="yach1_{{c.id}}" style="position: relative;" value="{{c.Value}}" count="0" isActive="false" plain_id="{{c.id}}"> <div class="yach1 extra_components {{i.name}}" id="extra_components_{{c.id}}"><img class="image" src="{% static ""%}images/concingridients/{{c.image}}" style="border-radius: 100px; cursor:pointer;" onclick="changeNonEssential({{c.id}})"><div class="CIname">{{c.name}}</div><div class="CIname" style="margin-left: -30px;min-width: 160px;text-align: center;">({{c.Value}} рублей)</div></div></div>
+                    <div class="yach1 {{i.name}}" name="{{c.name}}" id="yach1_{{c.id}}" style="position: relative;" value="{{c.Value}}" count="0" isActive="false" plain_id="{{c.id}}"> <div class="yach1 extra_components {{i.name}}" id="extra_components_{{c.id}}"><img class="image" src="{% static ""%}images/concingridients/{{c.image}}" style="border-radius: 100px; cursor:pointer;" onclick="changeNonEssential({{c.id}})"><div class="CIname">{{c.name}}</div><div class="CIname" style="margin-left: -30px;min-width: 160px;text-align: center;background-color: grey;">({{c.Value}} рублей)</div></div></div>
                     {% endif %} 
                     {% endif %}   
                     {% endfor %}  
@@ -100,7 +111,11 @@
             {% csrf_token %}
             <div class="buttonsecondorder" onclick="showCakePopup()" style="cursor: pointer; visibility:visible" id="butsecord">
             <div class="secondordertext" style="color:#794f4f;">
+                {% if dish_id == 'new' %}
                 Создать блюдо
+                {% else %}
+                Сохранить
+                {% endif %}
             </div></div>
             <div class="itogoname" id="itogvalue" style="text-align:center; margin-top: -1%;margin-left: 65%; font-size: 27px;" value="0">Итоговая стоимость: 0 ₽</div>  
         </div>

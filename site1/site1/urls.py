@@ -33,7 +33,9 @@ urlpatterns = [
     path('get-cake-id/', views.get_cake_id, name="get_cake_id"),
     path('get-cake-info/', views.get_cake_info, name="get_cake_info"),
     path('get-ingridients/', views.get_ingridients, name="get_ingridients"),
+    path("getdish/",views.get_dish, name="getdish" ),
     path('delete-ing/', views.delete_ing, name="delete_ing"),
+    path('delete-dish/', views.delete_dish, name="delete_dish"),
     path('save-param-changes/', views.save_param, name="save_param"),
     path('delete-params/', views.delete_param, name="delete_param"),
     path('delete-conc-ing/', views.delete_conc_ing, name="delete_conc_ing"),
@@ -50,5 +52,5 @@ urlpatterns = [
     path('concingredients/<int:ing_id>/new', views.gotoaddconcing, name="gotoaddconcing"),
     path('concingredients/<int:ci_id>', views.gotoconcing, name="gotoconcing"),
     path('constructor/free_<str:dish_id>', views.gotofreeconstructor, name="gotofreeconstructor"),
-    path('constructor/constructor_<int:cake_id>', views.gotoconstructcake, name="gotoconstructcake"),
+    path('constructor/constructor_<int:cake_id>_<str:dish_id>', views.gotoconstructcake, name="gotoconstructcake"),
 ]

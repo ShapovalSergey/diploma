@@ -17,7 +17,35 @@
         <div class="main_button" onclick="gotomain()">
             <div class="main_button_text">На главную</div>
         </div>
+
+        <div class="ing_info_field">
+
+
+            <div class="ing_info_field_row"><div class="cc_text">Заказы</div><div class="cc_text">Блюда</div></div>
+            <div class="order_dish_info_field">
+                <div class="order_info_field">
+                    {% for o in orders %} 
+                    <div class="order_field_row" onclick="CheckOrder({{o.id}})"><div class="order_text" style="width: 150px;">Заказ №{{o.id}}</div><div class="order_text" style="width: 250px;">Клиент: {{o.customer_name}}</div></div>
+                    {% endfor %}
+                </div>
+                <div class="dish_info_field">
+                    {% for d in dishes %} 
+                    {% if d.Id_cake_type.name == NULL %}
+                    <div class="dish_field_row" id="dish_row_{{d.id}}"><div class="order_text" style="width: 250px;">Название: {{d.name}} (Свободный)</div><div class="change_delete_block"><div class="change_delete_text" onclick="DeleteDish({{d.id}})">Удалить</div><div class="change_delete_text" onclick="ChangeFreeDish({{d.id}})">Изменить</div></div></div>
+                    {% else %}
+                    <div class="dish_field_row" id="dish_row_{{d.id}}"><div class="order_text" style="width: 250px;">Название: {{d.name}} ({{d.Id_cake_type.name}})</div><div class="change_delete_block"><div class="change_delete_text" onclick="DeleteDish({{d.id}})">Удалить</div><div class="change_delete_text" onclick="ChangeCakeDish({{d.id}},{{d.Id_cake_type.id}})">Изменить</div></div></div>
+                    {% endif %}  
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="ing_info_field_row">
+            <div class="add_archieve_button" onclick="CreatenewOrder()">
+                <div class="save_button_text" style="width: 350px;height: 40px;background: #ff8d8d;">Создать новый заказ</div>
+            </div>
+            </div>
+        </div>
     </div>
     <script src="{% static "js/main.js"%}"></script>
+    <script src="{% static "js/order.js"%}"></script>
 </body>
 </html>
