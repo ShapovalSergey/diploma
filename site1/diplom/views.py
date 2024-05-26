@@ -13,7 +13,7 @@ from .models import IngCT, CIChar
 from .models import CIChar
 from .models import CakeType
 from .models import Dish, DishIng
-from .models import Order,OrderStatus
+from .models import Order,OrderStatus, OrderDish
 # Create your views here.
 
 def main(request):
@@ -30,9 +30,45 @@ def gotoconstructor(request):
 
 def gotoorders(request):
     st = OrderStatus.objects.get(name="В работе")
-    orders = Order.objects.filter(status=st)
+    orders = Order.objects.filter(status=st).order_by('order_date')
     dishes = Dish.objects.all()
     return render(request, "orders.html",{"orders": orders,"dishes":dishes}) 
+
+def gotoorderinfo(request,order_id):
+    status=OrderStatus.objects.all()
+    status_all = {}
+    status_info=[]
+    dishes = Dish.objects.all()
+    name=''
+    date=''
+    current_status=''
+    phone=''
+    cake_ids = []
+    cake_all=[]
+    cake_info={}
+    if order_id!='new':
+        order=Order.objects.get(id=order_id)
+        name = order.customer_name
+        phone = order.phone
+        date=order.order_date
+        current_status=order.status.name
+        for d in dishes:
+            print(d.Id_cake_type)
+            if OrderDish.objects.filter(Id_order=order,Id_dish=d).count()==0:
+                if d.Id_cake_type==None:
+                    cake_info={"id":d.id,"value":0,"isUsed":False,"ctname":"Свободный","name":d.name}
+                else:
+                    cake_info={"id":d.id,"value":0,"isUsed":False,"ctname":d.Id_cake_type.name,"name":d.name}
+            else:
+                if d.Id_cake_type==None:
+                    cake_info={"id":d.id,"value":OrderDish.objects.get(Id_order=order,Id_dish=d).Value,"isUsed":True,"ctname":"Свободный","name":d.name}
+                else:
+                    cake_info={"id":d.id,"value":OrderDish.objects.get(Id_order=order,Id_dish=d).Value,"isUsed":True,"ctname":d.Id_cake_type.name,"name":d.name}
+            cake_all.append(cake_info)
+    for s in status:
+        status_all={'name':s.name,'id':s.id,}
+        status_info.append(status_all)
+    return render(request, "order_info.html",{"status_info": status_info,"id":order_id,"dishes":dishes,"name":name,"date":date,"current_status":current_status,"phone":phone,"cake_all":cake_all,}) 
 
 def gotocakes(request):
     cake_types=CakeType.objects.all()
@@ -369,6 +405,16 @@ def delete_param(request):
             char=Characteristic(id=id)
             char.delete()
             return HttpResponse("POST request")
+
+@csrf_exempt      
+def delete_order(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        if request.method == 'POST':
+            id= request.POST.get('id')
+            ord=Order(id=id)
+            ord.delete()
+            return HttpResponse("POST request")
         
 @csrf_exempt      
 def savefile(request):
@@ -501,7 +547,33 @@ def saveingfile(request):
             ing.save()
             file.close()
             return HttpResponse("POST request")     
-     
+        
+@csrf_exempt      
+def saveorder(request):
+        if request.method == 'POST':
+            name = request.POST.get("name") 
+            id = request.POST.get("id") 
+            phone = request.POST.get("phone") 
+            cakes_ids = request.POST.getlist('cakes_ids')[0].split(',')
+            cakes_values = request.POST.getlist('cakes_values')[0].split(',')
+            status = request.POST.get("status")  
+            date = request.POST.get("date")  
+            if id=='new':
+                order = Order(phone=phone,customer_name=name,order_date=date,status=OrderStatus.objects.get(id=status))
+                order.save()
+            else:
+                order = Order.objects.get(id=id)
+                order.customer_name=name
+                order.order_date=date
+                order.phone=phone
+                order.status=OrderStatus.objects.get(id=status)
+                order.save()
+                OrderDish.objects.filter(Id_order=order).delete()
+            for index, c in enumerate(cakes_ids):
+                neworddish=OrderDish(Id_order=order,Id_dish=Dish.objects.get(id=cakes_ids[index]),Value=cakes_values[index])
+                neworddish.save()
+            return HttpResponse("POST request")   
+
 @csrf_exempt      
 def saveconcingfile(request):
         if request.method == 'POST':

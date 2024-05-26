@@ -509,7 +509,6 @@ body {
 
 .ing_info_field_row
 {
-
     width: 1000px;
     height: 40px;
     margin-bottom: 5px;
@@ -828,9 +827,17 @@ body {
     line-height: normal;
 }
 
-
-
-
+.ing_info_block_field_row
+{
+    max-width: 410px;
+    min-width: 410px;
+    height: 40px;
+    display: flex;
+    align-items:center;
+    justify-content:center;
+    text-align: center;
+    vertical-align: middle;
+}
 
 
 
@@ -972,7 +979,7 @@ input[type=text]::placeholder {
   .custom-select-trigger {
     position: relative;
     display: block;
-    min-width: 420px;
+    min-width: 100px;
     padding: 0 104px 0 25px;
     font-family: 'Montserrat', sans-serif;
     font-size: 18px;
@@ -1085,3 +1092,157 @@ input[type=text]::placeholder {
     background-color: #ffa1a1;
   }
   
+  /** small-custom Select **/
+  .small-custom-select-wrapper {
+    position: relative;
+    display: inline-block;
+    user-select: none;
+    cursor: pointer;
+  }
+  .small-custom-select-wrapper select {
+    display: none;
+  }
+  .small-custom-select {
+    margin-left: 0px;
+    position: relative;
+    display: inline-block;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 40px;
+    z-index: 5;
+  }
+
+  .small-custom-select-trigger {
+    position: relative;
+    display: block;
+    min-width: 330px;
+    max-width: 330px;
+    padding: 0 65px 0 15px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 40px;
+    color: #be1414;
+    background-color: #ffffff;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+  .small-custom-select-trigger:hover {
+    -webkit-box-shadow: 0px 10px 50px 0px rgba(43, 111, 246, 0.1);
+    box-shadow: 0px 10px 50px 0px rgba(43, 111, 246, 0.1);
+  }
+  .small-custom-select-trigger:before {
+    position: absolute;
+    display: block;
+    content: "";
+    width: 1px;
+    height: 40px;
+    top: 3px;
+    right: 50px;
+    margin-top: -3px;
+    border-right: 1px solid #be1414;
+    transition: all 0.35s ease-out;
+    transform-origin: 50% 0;
+  }
+  .small-custom-select-trigger:after {
+    position: absolute;
+    display: block;
+    content: "";
+    width: 10px;
+    height: 10px;
+    top: 50%;
+    right: 20px;
+    margin-top: -3px;
+    border-bottom: 1px solid #be1414;
+    border-right: 1px solid #be1414;
+    transform: rotate(45deg) translateY(-50%);
+    transition: all 0.35s ease-out;
+    transform-origin: 50% 0;
+  }
+  .small-custom-select.opened .small-custom-select-trigger:after {
+    margin-top: 3px;
+    transform: rotate(-135deg) translateY(-50%);
+  }
+  .small-custom-options {
+    position: absolute;
+    display: block;
+    top: 100%;
+    left: 0%;
+    right: 0;
+    width: 100%;
+  
+    margin: 10px 0;
+    border-radius: 5px;
+    box-sizing: border-box;
+  
+    background: #fff;
+    transition: all 0.2s ease-in-out;
+  
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-15px);
+    border: 0;
+  }
+  .small-custom-select.opened .small-custom-options {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+    transform: translateY(-8px);
+  
+    -webkit-box-shadow: 0px 10px 50px 0px rgba(43, 111, 246, 0.1);
+    box-shadow: 0px 10px 50px 0px rgba(43, 111, 246, 0.1);
+  }
+  .option-hover:before {
+    background: #f9f9f9;
+  }
+  .small-custom-option {
+    position: relative;
+    display: block;
+    padding: 0 22px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 40px;
+    color: #be1414;
+    cursor: pointer;
+    transition: all 0.05s ease-in-out;
+  }
+  .small-custom-option:first-of-type {
+    border-radius: 4px 4px 0 0;
+  
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+  }
+  .small-custom-option:last-of-type {
+    border-bottom: 0;
+    border-radius: 0 0 4px 4px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+  .small-custom-option:hover,
+  .small-custom-option.selection {
+    color: #fff;
+    background-color: #be1414;
+  }
+  
+
+  input[type=date] {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-style: normal;
+	border: .2em solid #be1414;
+	padding: .8em .9em;
+	border-radius: 2em;
+	color: #be1414;
+	&::-webkit-datetime-edit-text { color: #be1414; padding: 0 0.3em; }
+	&::-webkit-inner-spin-button { display: none; }
+	&::-webkit-calendar-picker-indicator {
+		background-image: url("http://127.0.0.1:8000/static/images/calendar.png"); 
+	}
+}

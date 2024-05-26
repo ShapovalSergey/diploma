@@ -1,0 +1,70 @@
+<!doctype html>
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diplom</title>
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Inter:wght@400;700&family=Montserrat:wght@700&family=Noto+Sans:wght@700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>
+</head>
+<body style='overflow-x:hidden; margin:0%'>
+    <div class="main">
+        <div class="main_button" onclick="gobacktoOrders()">
+            <div class="main_button_text">Назад</div>
+        </div>
+        <div class="save_button" onclick="SaveOrder('{{id}}')">
+            <div class="save_button_text" >Сохранить</div>
+        </div>
+        {% if id != 'new' %}
+        <div class="delete_button" onclick="DeleteOrder('{{id}}')">
+            <div class="save_button_text">Удалить</div>
+            <div class="image_bin"><img src="{% static ""%}images/recycle_bin.png" class="image"></div>
+        </div>
+        {% endif %}
+
+        <div class="ing_info_field">
+            <div class="ing_info_field_row"><input class="inp" type="text"  placeholder="Имя клиента" id="input_name" plain_id="{{id}}" value="{{name}}" old_name="{{name}}" style="min-width:400px" name="Имя"></div>
+            <div class="ing_info_field_row"><input class="inp" type="text"  placeholder="Телефон клиента" id="input_phone" plain_id="{{id}}" value="{{phone}}" old_name="{{phone}}" style="min-width:400px" name="Телефон"></div>
+            <div class="ing_info_field_row">
+                {% for s in status_info %}
+                {% if s.name == current_status %}
+                <select name="potencial" id="status_type" class="small-custom-select sources" placeholder="{{s.name}}">
+                <option value="{{s.id}}">{{s.name}}</option>
+                {% else %}
+                <option value="{{s.id}}">{{s.name}}</option>
+                {% endif %}
+                {% endfor %}
+              </select>
+              </div>
+              <div class="ing_info_field_row" style="margin-top: 15px;"><div class="ing_info_block_field_row"><div class="order_text" style="width: 255px;height: 40px;font-size: 22px;">Выберите дату</div><input class="inp" type="date" value="{{date|date:"Y-m-d" }}" style="position: relative;" id="input_date"></div></div>
+            <div class="ing_info_field_row" style="margin-top: 40px;"><div class="cc_text" style="font-size: 22px;width: 1000px;">Выберите позиции заказа и их количество</div></div>
+            <div class="concing_field">
+                {% for d in cake_all %}
+                {% if d.isUsed == True %}
+                <div class="ing_info_field_row" style="margin-bottom: 10px;">
+                    <div class="dish_field_row" id="dish_row_{{d.id}}" style="height:36px;margin-bottom: 0px;cursor:pointer;" onclick="CheckDish({{d.id}})"><div class="order_text" style="width: 350px;height: 36px;">Название: {{d.name}} ({{d.ctname}})</div><div class="input_field"><input type="checkbox" id="input_value_{{d.id}}" plain_id="{{d.id}}" class="checkb"  onclick="CheckDish({{d.id}})" style="cursor: pointer;" checked></div></div>
+                    <input class="inp" type="text" id="input_{{d.id}}" plain_id="{{d.id}}" value="{{d.value}}" style="min-width:100px; min-width:50px;max-width:50px;margin-left: 100px;visibility: visible;" name="{{d.name}}">
+                </div> 
+                {% else %}
+                <div class="ing_info_field_row" style="margin-bottom: 10px;">
+                    <div class="dish_field_row" id="dish_row_{{d.id}}" style="height:36px;margin-bottom: 0px;cursor:pointer;" onclick="CheckDish({{d.id}})"><div class="order_text" style="width: 350px;height: 36px;">Название: {{d.name}} ({{d.ctname}})</div><div class="input_field"><input type="checkbox" id="input_value_{{d.id}}" plain_id="{{d.id}}" class="checkb"  onclick="CheckDish({{d.id}})" style="cursor: pointer;"></div></div>
+                    <input class="inp" type="text" id="input_{{d.id}}" plain_id="{{d.id}}" value="{{d.value}}" style="min-width:100px; min-width:50px;max-width:50px;margin-left: 100px;visibility: hidden;" name="{{d.name}}">
+                </div> 
+                {% endif %}
+                {% endfor %}
+            </div>
+
+
+        </div>
+
+    </div>
+    <script src="{% static "js/main.js"%}"></script>
+    <script src="{% static "js/order.js"%}"></script>
+    
+</body>
+</html>

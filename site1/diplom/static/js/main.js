@@ -8,6 +8,12 @@ function gotoOrders()
     document.location.href+="orders";
 }
 
+function gobacktoOrders()
+{
+    var local = location.pathname.split("/");
+    document.location.href=local[0]+"/orders";
+}
+
 function gotoCakes()
 {
     document.location.href+="cakes";

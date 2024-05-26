@@ -3,11 +3,6 @@ function gotoFreeConstructor(id)
     document.location.href+="/free_"+id;
 }
 
-function gobacktoOrders()
-{
-    var local = location.pathname.split("/");
-    document.location.href=local[0]+"/orders";
-}
 
 
 
