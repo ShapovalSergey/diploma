@@ -4,6 +4,8 @@ function showPopup()
     document.getElementsByClassName("add_cake_window")[0].setAttribute("style",'display:block');
     const p = document.getElementById("popup");
     p.style.transform=`translateY(70%)`
+    if (document.getElementById('type').value=='')
+    {document.getElementById('type').value='new';}
 }
 function closePopup()
 {
@@ -14,6 +16,12 @@ function closePopup()
     document.getElementById("cake_name").value="";
     document.getElementsByClassName("add_cake_back")[0].setAttribute("style",'display:none');
     document.getElementsByClassName("add_cake_window")[0].setAttribute("style",'display:none');
+    if (document.getElementById('type').value!='new')
+    {
+        document.getElementById('but_del'+document.getElementById('type').value).remove();
+        document.getElementById('cake_'+document.getElementById('type').value).remove();
+        document.getElementById('type').value='';
+    }
 }
 
 function savenewCake()
@@ -80,6 +88,7 @@ function gotoCake(id)
             'id':id,
           },
         success: (data) => {
+            document.getElementById('type').value=id;
             const name=data['name'];
             const img=data['img'];
             document.getElementsByClassName("add_cake_back")[0].setAttribute("style",'display:block');
@@ -98,6 +107,18 @@ function gotoCake(id)
             document.getElementById("userFile").setAttribute('oldImage',img);
             document.getElementById("cake_name").setAttribute('oldName',name);
             document.getElementsByClassName('save_cake_button')[0].setAttribute('onclick',"changeCake("+id+")");
+            const rootDiv = document.getElementById("row_to_add");
+            const elementDiv = document.createElement("div");
+            elementDiv.classList.add('save_cake_button');
+            elementDiv.onclick=function(){DeleteCake(id);}
+            elementDiv.setAttribute("id",'but_del'+id);
+            elementDiv.setAttribute("style",'width: 200px;height: 40px; background:#be1414;margin-left:40px;');
+            const elementText = document.createElement("div");
+            elementText.classList.add('save_button_text');
+            elementText.setAttribute("style",'width: 200px;height: 40px;');
+            elementText.textContent="Удалить";
+            elementDiv.appendChild(elementText);
+            rootDiv.appendChild(elementDiv);
         },
         error: (error) => {
             console.log(error);
@@ -209,4 +230,25 @@ function check_cake_name(name,id)
             console.log(error);
         }
       });
+}
+
+function DeleteCake(id)
+{
+    if (confirm("Вы точно хотите удалить торт?\n(Данное действие нельзя отменить)"))
+        {
+            $.ajax({
+                url: "/delete-cake/",
+                type: "POST",
+                dataType: "json",
+                async: false,
+                data:{'id':id},
+                success: (data) => {
+                    console.log(id);
+                },
+                error: (error) => {
+                    console.log(error);
+                }
+            });
+            closePopup();
+        }
 }

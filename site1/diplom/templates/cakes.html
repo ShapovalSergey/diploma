@@ -17,6 +17,7 @@
 </head>
 <body style='overflow-x:hidden; margin:0%'>
     <img src="{% static "images/cakes/test_cake.jpg"%}" style="display: none;">
+    <input type="hidden" class="id" value="" id="type">
     <div class="main">
         <div class="main_button" onclick="gotomain()">
             <div class="main_button_text">На главную</div>
@@ -31,8 +32,8 @@
             <div class="popup_row" style="top:40%;"><input class="inp1" placeholder="Название" type="text" id="cake_name" style="min-width: 20vw; text-align: center;"></input></div>
             <div class="popup_row" style="top:60%;"><div class="checkbox_text" style="font-size: 20px; width: 200px;">Изображение:</div><input type='file' id='userFile' style="cursor: pointer;"></div>
             <div class="popup_row" style="top:15%;"><div class="popup_text">Введите информацию для добавления нового типажа торта</div></div>
-            <div class="popup_row" style="top:85%;">
-            <div class="save_cake_button" onclick="savenewCake()" style="width: 200px;height: 40px; left:35%; top:85%; background:#be1414;">
+            <div class="popup_row" style="top:85%;" id="row_to_add">
+            <div class="save_cake_button" onclick="savenewCake()" style="width: 200px;height: 40px; background:#be1414;margin-right:40px;">
                 <div class="save_button_text" style="width: 200px;height: 40px;">Сохранить</div>
             </div>
             </div>

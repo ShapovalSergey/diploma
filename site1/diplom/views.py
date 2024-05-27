@@ -41,7 +41,7 @@ def gotoorderinfo(request,order_id):
     dishes = Dish.objects.all()
     name=''
     date=''
-    current_status=''
+    current_status='Выберите статус заказа'
     phone=''
     cake_ids = []
     cake_all=[]
@@ -415,7 +415,17 @@ def delete_order(request):
             ord=Order(id=id)
             ord.delete()
             return HttpResponse("POST request")
-        
+
+@csrf_exempt      
+def delete_cake(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        if request.method == 'POST':
+            id= request.POST.get('id')
+            cake=CakeType(id=id)
+            cake.delete()
+            return HttpResponse("POST request")
+   
 @csrf_exempt      
 def savefile(request):
         if request.method == 'POST':

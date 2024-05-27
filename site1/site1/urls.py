@@ -37,6 +37,7 @@ urlpatterns = [
     path('delete-ing/', views.delete_ing, name="delete_ing"),
     path('delete-dish/', views.delete_dish, name="delete_dish"),
     path('delete-order/', views.delete_order, name="delete_order"),
+    path('delete-cake/', views.delete_cake, name="delete_cake"),
     path('save-param-changes/', views.save_param, name="save_param"),
     path('delete-params/', views.delete_param, name="delete_param"),
     path('delete-conc-ing/', views.delete_conc_ing, name="delete_conc_ing"),

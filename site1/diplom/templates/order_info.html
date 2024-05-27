@@ -31,9 +31,9 @@
             <div class="ing_info_field_row"><input class="inp" type="text"  placeholder="Имя клиента" id="input_name" plain_id="{{id}}" value="{{name}}" old_name="{{name}}" style="min-width:400px" name="Имя"></div>
             <div class="ing_info_field_row"><input class="inp" type="text"  placeholder="Телефон клиента" id="input_phone" plain_id="{{id}}" value="{{phone}}" old_name="{{phone}}" style="min-width:400px" name="Телефон"></div>
             <div class="ing_info_field_row">
+                <select name="potencial" id="status_type" class="small-custom-select sources" placeholder="{{current_status}}">
                 {% for s in status_info %}
                 {% if s.name == current_status %}
-                <select name="potencial" id="status_type" class="small-custom-select sources" placeholder="{{s.name}}">
                 <option value="{{s.id}}">{{s.name}}</option>
                 {% else %}
                 <option value="{{s.id}}">{{s.name}}</option>

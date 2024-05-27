@@ -18,7 +18,7 @@ class ConcreateIngredients(models.Model):
     image=models.TextField(max_length=100)
     image_ready=models.TextField(max_length=100)
     Value=models.FloatField(blank=True)
-    Id_ing=models.ForeignKey(Ingredients, on_delete=models.RESTRICT)
+    Id_ing=models.ForeignKey(Ingredients, on_delete=models.CASCADE)
 
     class Meta:
         managed = True
