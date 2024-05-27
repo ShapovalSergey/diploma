@@ -36,8 +36,6 @@ function CreatenewOrder(id)
     document.location.href+="/order_"+id;
 }
 
-
-
 $(".small-custom-select").each(function() {
     var classes = $(this).attr("class"),
       id = $(this).attr("id"),
@@ -61,7 +59,6 @@ $(".small-custom-select").each(function() {
           "</span>";
       });
     template += "</div></div>";
-  
     $(this).wrap('<div class="small-custom-select-wrapper"></div>');
     $(this).hide();
     $(this).after(template);
