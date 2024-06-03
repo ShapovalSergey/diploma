@@ -88,9 +88,9 @@
                 {% for cica in ci_count_array %} 
                 {% if i.id == cica.id %}
                 {% if i.IsEssential == True %}
-                <div class="yach essential" style="visibility:hidden;grid-template-rows: repeat({{cica.count}}, 160px);" id="yach{{i.id}}" name="{{i.name}}">
+                <div class="yach essential" style="visibility:hidden;grid-template-rows: repeat({{cica.count}}, 140px);" id="yach{{i.id}}" name="{{i.name}}">
                 {% else %}
-                <div class="yach" style="visibility:hidden;grid-template-rows: repeat({{cica.count}}, 160px);" id="yach{{i.id}}">
+                <div class="yach" style="visibility:hidden;grid-template-rows: repeat({{cica.count}}, 140px);" id="yach{{i.id}}">
                 {% endif %} 
                 {% endif %}   
                 {% endfor %}  

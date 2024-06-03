@@ -62,7 +62,7 @@ function addCake(name)
             ImageDiv.classList.add('cake_type_card_image');
             elementImg.classList.add('image');
             elementImg.setAttribute("id",'card_image_'+id);
-            elementImg.setAttribute("src",'static/images/cakes/'+img);
+            elementImg.setAttribute("src",'/static/images/cakes/'+img);
             TextDiv.classList.add('button_text');
             TextDiv.textContent=name;
             TextDiv.setAttribute("id",'card_text_'+id);
@@ -144,7 +144,7 @@ function changeCakeCard(id,name,img_name)
     text_card=document.getElementById("card_text_"+id);
     image_card=document.getElementById("card_image_"+id);
     text_card.textContent=name;
-    image_card.setAttribute("src",'static/images/cakes/'+img_name);
+    image_card.setAttribute("src",'/static/images/cakes/'+img_name);
 }
 
 function check_cake_name(name,id)
@@ -244,6 +244,22 @@ function DeleteCake(id)
                 data:{'id':id},
                 success: (data) => {
                     console.log(id);
+                },
+                error: (error) => {
+                    console.log(error);
+                }
+            });
+            img_del=document.getElementById("userFile").getAttribute('oldImage');
+            $.ajax({
+                url: "/deletefile/",
+                type: "POST",
+                dataType: "json",
+                async: false,
+                data:{
+                'img_del':img_del,
+                },
+                success: (data) => {
+                    console.log(success);
                 },
                 error: (error) => {
                     console.log(error);

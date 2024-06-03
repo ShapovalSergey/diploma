@@ -22,13 +22,13 @@ function DeleteDish(id)
 function ChangeFreeDish(id_dish)
 {
     var local = location.pathname.split("/");
-    document.location.href=local[0]+"/constructor/free_"+id_dish;
+    document.location.href=local[0]+"/"+local[1]+"/constructor/free_"+id_dish;
 }
 
 function ChangeCakeDish(id_dish,id_ct)
 {
     var local = location.pathname.split("/");
-    document.location.href=local[0]+"/constructor/constructor_"+id_ct+"_"+id_dish;
+    document.location.href=local[0]+"/"+local[1]+"/constructor/constructor_"+id_ct+"_"+id_dish;
 }
 
 function CreatenewOrder(id)

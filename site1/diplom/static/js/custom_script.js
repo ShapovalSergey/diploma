@@ -50,13 +50,13 @@ function createElementsInside(id,value,name,img,otstup)
   const elementDelete = document.createElement("div");
   if(otstup%2==1)
   {
-    elementText.style.cssText='margin-top: 40px; margin-left: 450px; font-size: 30px; width: 200px;';
-    elementDelete.style.cssText='background-image:url(http://127.0.0.1:8000/static/images/close-button1.png);margin-top: -38px; margin-left: 660px;;background-repeat: no-repeat;background-position: center;height: 40px; width: 40px; border-color:#ffffff;color:#ffffff;';
+    elementText.style.cssText='margin-top:5px; margin-left: 400px; font-size: 30px; width: 250px;';
+    elementDelete.style.cssText='background-image:url(http://127.0.0.1:8000/static/images/close-button1.png); margin-top: -40px;margin-left: 640px;;background-repeat: no-repeat;background-position: center;height: 40px; width: 40px; border-color:#ffffff;color:#ffffff;';
   }
   else 
   {
-    elementText.style.cssText='margin-top: 40px; margin-left: -150px; font-size: 30px; width: 200px;';
-    elementDelete.style.cssText='background-image:url(http://127.0.0.1:8000/static/images/close-button1.png);margin-top: -38px; margin-left: -200px;;background-repeat: no-repeat;background-position: center;height: 40px;width: 40px;border-color:#ffffff;color:#ffffff;';
+    elementText.style.cssText='margin-top:5px; margin-left: -250px; font-size: 30px; width: 250px;';
+    elementDelete.style.cssText='background-image:url(http://127.0.0.1:8000/static/images/close-button1.png); margin-top: -40px;margin-left: -280px;;background-repeat: no-repeat;background-position: center;height: 40px;width: 40px;border-color:#ffffff;color:#ffffff;';
   }
   elementDelete.setAttribute("id",'butdel_'+id);
   elementDelete.setAttribute("name",name);
@@ -67,7 +67,7 @@ function createElementsInside(id,value,name,img,otstup)
   elementDiv.setAttribute("value",value);
   elementDiv.setAttribute("name",name);
   elementDiv.setAttribute("number",otstup);
-  elementDiv.style.cssText+='background-image:url(http://127.0.0.1:8000/static/images/ingready/'+img+');background-repeat: no-repeat;background-position: center;margin-top:'+(430-30*otstup)+'px;opacity: 0;animation: ani 1s forwards;z-index:'+otstup+';';
+  elementDiv.style.cssText+='background-image:url(http://127.0.0.1:8000/static/images/ingready/'+img+');background-repeat: no-repeat;background-position: center;margin-top:'+(430-30*otstup)+'px;opacity: 0.99;animation: ani 1s forwards;z-index:'+otstup+';';
   elementText.style.cssText+='opacity: 0;animation: ani 1s forwards;';
   elementDelete.style.cssText+='opacity: 0;animation: ani 1s forwards;cursor:pointer;';
   elementText.textContent=name+': '+value+'₽';
@@ -180,7 +180,11 @@ function addChaarcteristics(id)
             if (arr[i].param[j].param_id==usedparams[l].getAttribute('plain_id'))
             {
               usedparams[l].setAttribute("value", parseFloat(usedparams[l].getAttribute('value'))+parseFloat(arr[i].param[j].param_value))
-              usedparams[l].textContent = usedparams[l].getAttribute('name') + " : " + usedparams[l].getAttribute('value');
+              var stroka = usedparams[l].getAttribute('value').split('.');
+              if (stroka[1]!=undefined) {if (stroka[1].length>2) stroka[1] = stroka[1].substr(0,2);}
+              else stroka[1] = 0;
+              const val = stroka[0]+'.'+stroka[1];
+              usedparams[l].textContent = usedparams[l].getAttribute('name') + " : " + val;
               find_param=1;
             }
           }
@@ -192,7 +196,11 @@ function addChaarcteristics(id)
             elementDiv.setAttribute("plain_id",arr[i].param[j].param_id);
             elementDiv.setAttribute("name",arr[i].param[j].param_name);
             elementDiv.setAttribute("value",arr[i].param[j].param_value);
-            elementDiv.textContent = arr[i].param[j].param_name+" : "+arr[i].param[j].param_value;
+            var stroka = arr[i].param[j].param_value.split('.');
+            if (stroka[1]!=undefined) {if (stroka[1].length>2) stroka[1] = stroka[1].substr(0,2);}
+            else stroka[1] = 0;
+            const val = stroka[0]+'.'+stroka[1];
+            elementDiv.textContent = arr[i].param[j].param_name+" : "+val;
             elementDiv.classList.add('param_text');
             rootDiv[0].appendChild(elementDiv);
           }
@@ -216,9 +224,13 @@ function decreaseCharacteristics(id)
           {
             if (arr[i].param[j].param_id==usedparams[l].getAttribute('plain_id'))
             {
-              usedparams[l].setAttribute("value", parseFloat(usedparams[l].getAttribute('value'))-parseFloat(arr[i].param[j].param_value))
-              usedparams[l].textContent = usedparams[l].getAttribute('name') + " : " + usedparams[l].getAttribute('value');
-              if(usedparams[l].getAttribute('value')==0)
+              usedparams[l].setAttribute("value", parseFloat(usedparams[l].getAttribute('value'))-parseFloat(arr[i].param[j].param_value));
+              var stroka = usedparams[l].getAttribute('value').split('.');
+              if (stroka[1]!=undefined) {if (stroka[1].length>2) stroka[1] = stroka[1].substr(0,2);}
+              else stroka[1] = 0;
+              const val = stroka[0]+'.'+stroka[1];
+              usedparams[l].textContent = usedparams[l].getAttribute('name') + " : " + val;
+              if(usedparams[l].getAttribute('value')<=0)
               {
                 usedparams[l].remove();
               }
@@ -327,7 +339,7 @@ function createStartCakePosition()
         elementDiv.textContent = arr[j].ingname+" : "+arr[j].name;
         elementDiv.classList.add('param_text');
         rootDiv[0].appendChild(elementDiv);
-        createFullElementsInside(arr[j].ingname,addprice,name,kar);
+        createFullElementsInside(arr[j].ingname,addprice,name,kar,1);
       }
     }
   }
@@ -343,7 +355,7 @@ function createStartCakePosition()
   }
 
 
-function createFullElementsInside(id,value,name,img) 
+function createFullElementsInside(id,value,name,img,index) 
 {
   const rootDiv = document.getElementsByClassName("fishka_additional");
   const elementDiv = document.createElement("div");
@@ -354,7 +366,11 @@ function createFullElementsInside(id,value,name,img)
   elementDiv.setAttribute("plain_id",plain_id);
   elementDiv.setAttribute("value",value);
   elementDiv.setAttribute("name",name);
-  elementDiv.style.cssText+='background-image:url(http://127.0.0.1:8000/static/images/ingready/'+img+');background-repeat: no-repeat;background-position: center;opacity: 0;animation: ani 1s forwards;';
+  elementDiv.style.cssText+='background-image:url(http://127.0.0.1:8000/static/images/ingready/'+img+');background-repeat: no-repeat;background-position: center;opacity: 0.99;animation: ani 1s forwards;';
+  if (index==-1) 
+    {elementDiv.style.cssText+='z-index:0;opacity:0.99;';}
+  else elementDiv.style.cssText+='z-index:'+100-id+';';
+  elementDiv.style.opacity=100-id;
   elementDiv.classList.add('newfullElement');
   rootDiv[0].appendChild(elementDiv);
 }
@@ -395,7 +411,7 @@ function createStartPosition()
         elementDiv.textContent = arr[j].ingname+" : "+arr[j].name;
         elementDiv.classList.add('param_text');
         rootDiv[0].appendChild(elementDiv);
-        createFullElementsInside(arr[j].ingname,addprice,name,kar);
+        createFullElementsInside(arr[j].ingname,addprice,name,kar,1);
       }
     }
   }
@@ -406,7 +422,7 @@ function createStartPosition()
   rootDiv[0].appendChild(title);
 }
 
-function changeIngInfo(id)
+function changeIngInfo(id,index)
 {
   const value = JSON.parse(document.getElementById('hello-data').textContent);
   arr = JSON.parse(value);
@@ -416,7 +432,10 @@ function changeIngInfo(id)
       {
         var kar = arr[i].img;
         document.getElementById("ing_"+arr[i].ingid).textContent = arr[i].ingname+" : "+arr[i].name;
-        document.getElementById("ing_image_"+arr[i].ingname).setAttribute("style",'background-image:url(http://127.0.0.1:8000/static/images/ingready/'+arr[i].img+');background-repeat: no-repeat;background-position: center;opacity: 0;animation: ani 1s forwards;');
+        document.getElementById("ing_image_"+arr[i].ingname).setAttribute("style",'background-image:url(http://127.0.0.1:8000/static/images/ingready/'+arr[i].img+');background-repeat: no-repeat;background-position: center;opacity: 0.99;animation: ani 1s forwards;');
+        if (index==-1) 
+          {document.getElementById("ing_image_"+arr[i].ingname).style.cssText+='z-index:0;opacity:0.99;';}
+        else document.getElementById("ing_image_"+arr[i].ingname).style.cssText+='z-index:'+100-id+';';
         document.getElementById("ing_image_"+arr[i].ingname).setAttribute("plain_id",id);
       }
     }
@@ -455,7 +474,7 @@ function changeEssential(id)
     var itog = document.getElementById("itogvalue").getAttribute('value');
     val1 = parseFloat(itog);
     document.getElementById("itogvalue").textContent="Итоговая стоимость: "+val1+" ₽";
-    changeIngInfo(elem.getAttribute("plain_id"));
+    changeIngInfo(elem.getAttribute("plain_id"),1);
   }
 }
 
@@ -515,7 +534,7 @@ function changeNonEssential(id)
       document.getElementById("ing_"+ingid).textContent=arr[number].ingname+" : "+arr[number].name;
       document.getElementById("ing_image_"+ingname).remove();
     }
-    createFullElementsInside(ingname,elem.getAttribute('value'),elem.getAttribute('name'),img);
+    createFullElementsInside(ingname,elem.getAttribute('value'),elem.getAttribute('name'),img,-1);
     elem.setAttribute("isactive",'true');
     document.getElementById("extra_components_"+elem.getAttribute("plain_id")).setAttribute("style","border: 2px solid #5fe46a;");
     addChaarcteristics(elem.getAttribute("plain_id"));
@@ -525,7 +544,7 @@ function changeNonEssential(id)
     var itog = document.getElementById("itogvalue").getAttribute('value');
     val1 = parseFloat(itog);
     document.getElementById("itogvalue").textContent="Итоговая стоимость: "+val1+" ₽";
-    changeIngInfo(elem.getAttribute("plain_id"));
+    changeIngInfo(elem.getAttribute("plain_id"),-1);
   }
   else
   {

@@ -58,7 +58,6 @@ def gotoorderinfo(request,order_id):
             date=''
             current_status='Выберите статус заказа'
             phone=''
-            cake_ids = []
             cake_all=[]
             cake_info={}
             if order_id!='new':
@@ -68,7 +67,6 @@ def gotoorderinfo(request,order_id):
                 date=order.order_date
                 current_status=order.status.name
                 for d in dishes:
-                    print(d.Id_cake_type)
                     if OrderDish.objects.filter(Id_order=order,Id_dish=d).count()==0:
                         if d.Id_cake_type==None:
                             cake_info={"id":d.id,"value":0,"isUsed":False,"ctname":"Свободный","name":d.name}
@@ -80,9 +78,17 @@ def gotoorderinfo(request,order_id):
                         else:
                             cake_info={"id":d.id,"value":OrderDish.objects.get(Id_order=order,Id_dish=d).Value,"isUsed":True,"ctname":d.Id_cake_type.name,"name":d.name}
                     cake_all.append(cake_info)
+            else:
+                for d in dishes:
+                    if d.Id_cake_type==None:
+                        cake_info={"id":d.id,"value":'',"isUsed":False,"ctname":"Свободный","name":d.name}
+                    else:
+                        cake_info={"id":d.id,"value":'',"isUsed":False,"ctname":d.Id_cake_type.name,"name":d.name}
+                    cake_all.append(cake_info)
             for s in status:
                 status_all={'name':s.name,'id':s.id,}
                 status_info.append(status_all)
+            print(dishes)
             return render(request, "order_info.html",{"status_info": status_info,"id":order_id,"dishes":dishes,"name":name,"date":date,"current_status":current_status,"phone":phone,"cake_all":cake_all,}) 
         else:
             return HttpResponseRedirect('/enter')  

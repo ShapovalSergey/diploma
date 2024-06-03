@@ -15,7 +15,7 @@ function addChar()
     elementInput.setAttribute("id",'input_new_'+new_id);
     elementInput.setAttribute("plain_id",'new');
     elementInput.setAttribute("value",'');
-    elementImg.setAttribute("src",'static/images/close-button.png');
+    elementImg.setAttribute("src",'/static/images/close-button.png');
     deleteDiv.appendChild(elementImg);
     elementDiv.appendChild(elementInput);
     elementDiv.appendChild(deleteDiv);
