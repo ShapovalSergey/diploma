@@ -104,3 +104,18 @@ class OrderDish(models.Model):
     class Meta:
         managed = True
         db_table = 'OrderDish'
+
+class User(models.Model):
+    login = models.CharField(unique=True, max_length=50) 
+    password = models.CharField(max_length=100) 
+
+    class Meta:
+        managed = True
+        db_table = 'User'
+
+class Token(models.Model):
+    token = models.CharField(max_length=200)
+    id_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    class Meta:
+        managed = True
+        db_table = 'Token'

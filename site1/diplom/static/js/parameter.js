@@ -32,13 +32,13 @@ function gotomaincheck()
     if (confirm("У вас остались несохраненные изменения. Нажмите \"отмена\" и сохраните изменения или нажмите \"ок\", чтобы выйти без сохранения."))
     {
     var local = location.pathname.split("/");
-    document.location.href=local[0]+"/";
+    document.location.href=local[0]+"/"+local[1];
     }
     }
     else
     {
         var local = location.pathname.split("/");
-        document.location.href=local[0]+"/"; 
+        document.location.href=local[0]+"/"+local[1]; 
     }
 }
 

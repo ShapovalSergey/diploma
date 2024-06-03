@@ -25,6 +25,64 @@ body {
     height: 600px;
 }
 
+.window
+{
+    position: absolute;
+    min-width:40%;
+    min-height:40%;
+    top: 30%;
+    left:30%;
+    background: #fac9c9;
+    border-radius: 100px;
+    border: 1px solid #fac9c9;
+}
+
+.regbutton
+{
+    position: absolute;
+    margin-left: 11.2%;
+    bottom: 0%;
+    margin-bottom: 5%;;
+    text-align: center;
+    color: #FFF;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 30px;
+    font-style: normal;
+    line-height: normal;
+    cursor: pointer;
+    width: 75%;
+    padding: 9px 10px;
+    height: 40px;
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: 100px;
+    background:#be1414;
+}
+
+.errorlabel
+{
+    visibility: hidden;
+    margin-left:3.5%;
+    top:10%;
+    min-width:100%;
+    text-align: center;
+    color: #ff0000;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+    font-style: normal;
+    line-height: normal;
+}
+
+.showhide 
+{
+  position: absolute;
+  top:51%;
+  right:0%;
+  margin-right: 100px;;
+  width: 30px;
+  height: 30px;
+  cursor:pointer;
+}
+
 .menu_button
 {
     position:relative;
@@ -839,10 +897,63 @@ body {
     vertical-align: middle;
 }
 
+.enter_row
+{
+  position: absolute;
+  top:50%;
+  left:10%;
+    max-width: 560px;
+    min-width: 280px;
+    height: 40px;
+    display: flex;
+    align-items:center;
+    justify-content:center;
+    text-align: center;
+    vertical-align: middle;
+}
 
+.enter_half_row
+{
+    max-width: 280px;
+    min-width: 140px;
+    width:280px;
+    height: 40px;
+    display: flex;
+    align-items:center;
+    justify-content:center;
+    text-align: center;
+    vertical-align: middle;
+}
 
-
-
+.main_title
+{
+    position: absolute;
+    top:20%;
+    min-width:100%;
+    text-align: center;
+    color: #FFF;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 48px;
+    font-style: normal;
+    line-height: normal;
+    text-shadow: 
+        -0   -1px 1px #be1414,
+        0   -1px 1px #be1414,
+        -0    1px 1px #be1414,
+        0    1px 1px #be1414,
+        -1px -0   1px #be1414,
+        1px -0   1px #be1414,
+        -1px  0   1px #be1414,
+        1px  0   1px #be1414,
+        -1px -1px 1px #be1414,
+        1px -1px 1px #be1414,
+        -1px  1px 1px #be1414,
+        1px  1px 1px #be1414,
+        -1px -1px 1px #be1414,
+        1px -1px 1px #be1414,
+        -1px  1px 1px #be1414,
+        1px  1px 1px #be1414;
+}
 
 
 
@@ -862,7 +973,51 @@ body {
 
 input[type=text] {
 
-    min-width:25vw;
+  min-width:25vw;
+	appearance: none;
+	border: none;
+	outline: none;
+	border-bottom: .2em solid #be1414;
+	background: rgba(#be1414, .2);
+	border-radius: .2em .2em 0 0;
+	padding: .2em;
+	color: #be1414;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+
+input[type="password"]
+{
+  min-width:100px;
+  max-width:240px;
+	appearance: none;
+	border: none;
+	outline: none;
+	border-bottom: .2em solid #be1414;
+	background: rgba(#be1414, .2);
+	border-radius: .2em .2em 0 0;
+	padding: .2em;
+	color: #be1414;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  -webkit-text-security: disc;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
+}
+
+
+input[type="password_text"]
+{
+  min-width:100px;
+  max-width:240px;
 	appearance: none;
 	border: none;
 	outline: none;
@@ -879,9 +1034,17 @@ input[type=text] {
 }
 
 input[type=text]::placeholder {
-    color: #be1414;
-    opacity: 1; /* Firefox */
-  }
+  color: #be1414;
+  opacity: 1; /* Firefox */
+}
+input[type=password]::placeholder {
+  color: #be1414;
+  opacity: 1; /* Firefox */
+}
+input[type=password_text]::placeholder {
+  color: #be1414;
+  opacity: 1; /* Firefox */
+}
 
 ::-webkit-scrollbar {
     width: 20px;

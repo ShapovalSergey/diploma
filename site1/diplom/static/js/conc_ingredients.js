@@ -121,7 +121,7 @@ $(".custom-select").each(function() {
 function gotoIngredients()
 {
     var local = location.pathname.split("/");
-    document.location.href=local[0]+"/"+local[1];
+    document.location.href=local[0]+"/"+local[1]+"/"+local[2];
 }
 
 function gotoConcreteIngridient(id)
